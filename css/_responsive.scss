@@ -1,0 +1,153 @@
+@media only screen and (max-width: $smallScreen) {
+    .welcome {
+        display: block;
+
+        .leftwatermark {
+            left: 40px;
+            top: 40px;
+            background-position: center left;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        nav .links{
+            display: none;
+        }
+
+        #enter_room {
+            position: relative;
+            height: 42px;
+
+            .welcome-page-button {
+                font-size: 16px;
+                left: 0;
+                position: absolute;
+                top: 80px;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        .header-container{
+            margin: 80px 32px 0 32px;
+        }
+
+        .header {
+            #enter_room {
+                .enter-room-input-container {
+                    padding-right: 0;
+                }
+
+                .warning-without-link,
+                .warning-with-link {
+                    top: 120px;
+                }
+            }
+        }
+
+        .welcome-tabs {
+            display: none;
+        }
+
+        .header-text-title {
+            text-align: center;
+        }
+
+        .welcome-cards-container {
+            padding: 0;
+            padding-bottom: 30px;
+        }
+
+        &.without-content {
+            .header {
+                height: 100%;
+                padding-bottom: 0;
+            }
+        }
+
+        #moderated-meetings {
+            display: none;
+        }
+
+        .welcome-footer-row-block {
+            display: block;
+        }
+        .welcome-badge {
+            margin-right: 16px;
+        }
+
+        .welcome-footer {
+            display: none;
+        }
+
+        .footer-info{
+            display: none;
+        }
+
+        .footer-info-mobile{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .meetings-list .item{
+        flex-wrap: wrap;
+        padding: 16px 20px;
+
+        .left-column {
+            width: 45%;
+
+            .title-item{
+                margin-bottom: 5px;
+            }
+
+            &:nth-child(2), &:nth-child(4){
+                align-items: flex-end;
+                margin-bottom: 10px;
+
+                .title-item{
+                    text-align: end;
+                }
+            }
+
+            &:nth-child(3){
+                margin-bottom: 10px;
+            }
+
+            &:nth-child(4){
+                margin-left: 10px;
+            }
+        }
+
+        .actions{
+            width: 100%;
+            height: 30px;
+            margin-right: 0;
+
+            .delete-meeting{
+                display: block;
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.desktop-browser {
+    &.shift-right {
+
+        @media only screen and (max-width: $verySmallScreen + $sidebarWidth) {
+
+            #videoResolutionLabel {
+                display: none;
+            }
+            .vertical-filmstrip .filmstrip {
+                display: none;
+            }
+            .chrome-extension-banner {
+                display: none;
+            }
+        }
+    }
+}
