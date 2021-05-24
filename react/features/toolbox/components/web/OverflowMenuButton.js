@@ -78,15 +78,15 @@ class OverflowMenuButton extends Component<Props> {
                 {
                     overflowDrawer ? (
                         <>
-                            {/* {this._renderToolbarButton()}
+                            {this._renderToolbarButton()}
                             <DrawerPortal>
                                 <Drawer
-                                    canExpand = { true }
-                                    isOpen = { isOpen }
-                                    onClose = { this._onCloseDialog }>
+                                    canExpand={true}
+                                    isOpen={isOpen}
+                                    onClose={this._onCloseDialog}>
                                     {children}
                                 </Drawer>
-                            </DrawerPortal> */}
+                            </DrawerPortal>
                         </>
                     ) : (
                         <InlineDialog

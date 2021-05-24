@@ -216,7 +216,7 @@ class Conference extends AbstractConference<Props, *> {
                             onClick={this.handleReload}><img src='../../../../../images/qcloud_logo.svg' /></button>}
                     </div>
 
-                    {_showPrejoin || _isLobbyScreenVisible || <><Toolbox /><RightToolbox /></>}
+                    {_showPrejoin || _isLobbyScreenVisible || (screen.width < 1000 ? <RightToolbox /> : <Toolbox />)}
                     <Chat />
 
                     {this.renderNotificationsContainer()}
