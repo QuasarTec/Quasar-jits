@@ -154,11 +154,16 @@
             box-sizing: border-box;
             z-index: $zindex3;
             background: $dominantSpeakerBg;
-            color: $thumbnailPictogramColor;
+            color: #f5d742;
             border: $thumbnailIndicatorBorder solid $thumbnailPictogramColor;
 
             .indicatoricon {
                 @include absoluteAligning();
+
+                svg{
+                    width: 12px;
+                    height: 12px;
+                }
             }
 
             .connection {
