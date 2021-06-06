@@ -153,8 +153,7 @@
             @include circle($thumbnailIndicatorSize);
             box-sizing: border-box;
             z-index: $zindex3;
-            background: $dominantSpeakerBg;
-            color: #f5d742;
+            background: #f5d742;
             border: $thumbnailIndicatorBorder solid $thumbnailPictogramColor;
 
             .indicatoricon {
