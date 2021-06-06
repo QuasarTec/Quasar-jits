@@ -198,22 +198,22 @@ class Conference extends AbstractConference<Props, *> {
         } = this.props;
 
         return (
-            <div id='layout_wrapper'>
+            <div id = 'layout_wrapper'>
                 <div
-                    className={_layoutClassName}
-                    id='videoconference_page'
-                    onMouseMove={this._onShowToolbar}
-                    ref={this._setBackground}>
+                    className = { _layoutClassName }
+                    id = 'videoconference_page'
+                    onMouseMove = { this._onShowToolbar }
+                    ref = { this._setBackground }>
                     <ConferenceInfo />
 
                     <Notice />
-                    <div id='videospace'>
+                    <div id = 'videospace'>
                         <LargeVideo />
                         {!_isParticipantsPaneVisible && <KnockingParticipantList />}
                         <Filmstrip />
-                        {!_showPrejoin && <button
-                            className='reload-button'
-                            onClick={this.handleReload}><img src='../../../../../images/qcloud_logo.svg' /></button>}
+                        {window.innerWidth > 1000 && <button
+                            className = 'reload-button'
+                            onClick = { this.handleReload }><img src = '../../../../../images/qcloud_logo.svg' /></button>}
                     </div>
 
                     {_showPrejoin || _isLobbyScreenVisible || (window.innerWidth <= 1000 ? <RightToolbox /> : <Toolbox />)}

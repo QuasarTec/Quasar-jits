@@ -325,7 +325,7 @@
     .mobile-toolbox {
         display: block;
 
-        .sound {
+        .sound, .additional {
             opacity: 0.4;
             position: absolute;
             transition: opacity 0.3s ease-in;
@@ -354,12 +354,37 @@
             }
         }
 
+        .additional {
+            left: 25px;
+            top: 60px;
+            right: auto;
+
+            .additional-wrapper {
+                background-color: #131519;
+                border-radius: 1000px;
+                padding: 7px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .reload-button {
+                width: 60px;
+                height: 60px;
+                
+                svg {
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+        }
+
         &.visible {
             .other {
                 bottom: 20px;
             }
 
-            .sound {
+            .sound, .additional {
                 opacity: 1;
             }
         }
