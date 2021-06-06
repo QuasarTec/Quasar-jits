@@ -1098,13 +1098,6 @@ class Toolbox extends Component<Props> {
                 key='shortcuts'
                 onClick={this._onToolbarOpenKeyboardShortcuts}
                 text={t('toolbar.shortcuts')} />,
-            this._isEmbedMeetingVisible()
-            && <OverflowMenuItem
-                accessibilityLabel={t('toolbar.accessibilityLabel.embedMeeting')}
-                icon={IconCodeBlock}
-                key='embed'
-                onClick={this._onToolbarOpenEmbedMeeting}
-                text={t('toolbar.embedMeeting')} />,
             this._shouldShowButton('feedback')
             && _feedbackConfigured
             && <OverflowMenuItem
@@ -1187,13 +1180,13 @@ class Toolbox extends Component<Props> {
 
         if (this._shouldShowButton('raisehand')) {
             buttons.has('raisehand')
-                ? mainMenuAdditionalButtons.push(<ToolbarButton
+                ? mainMenuAdditionalButtons.push(<span className="hand-thingy"><ToolbarButton
                     accessibilityLabel={t('toolbar.accessibilityLabel.raiseHand')}
                     icon={IconRaisedHand}
                     key='raisehand'
                     onClick={this._onToolbarToggleRaiseHand}
                     toggled={_raisedHand}
-                    tooltip={t(`toolbar.${_raisedHand ? 'lowerYourHand' : 'raiseYourHand'}`)} />)
+                    tooltip={t(`toolbar.${_raisedHand ? 'lowerYourHand' : 'raiseYourHand'}`)} /></span>)
                 : overflowMenuAdditionalButtons.push(<OverflowMenuItem
                     accessibilityLabel={t('toolbar.accessibilityLabel.raiseHand')}
                     icon={IconRaisedHand}

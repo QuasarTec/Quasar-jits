@@ -79,6 +79,10 @@
     }
 }
 
+.hand-thingy .toggled svg{
+    fill: #8743FF;
+}
+
 .toolbox-button {
     color: $toolbarButtonColor;
     cursor: pointer;

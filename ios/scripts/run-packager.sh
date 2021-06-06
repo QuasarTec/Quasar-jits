@@ -15,6 +15,6 @@ if [[ "$CONFIGURATION" = "Debug" ]]; then
       exit 2
     fi
   else
-    open -g "$THIS_DIR/run-packager-helper.command" || echo "Can't start packager automatically"
+    open -g "$THIS_DIR/run-packager-helper.sh" || echo "Can't start packager automatically"
   fi
 fi
