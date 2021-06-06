@@ -41,7 +41,7 @@ import { EmbedMeetingDialog } from '../../../embed-meeting';
 import { SharedDocumentButton } from '../../../etherpad';
 import { openFeedbackDialog } from '../../../feedback';
 import { openKeyboardShortcutsDialog } from '../../../keyboard-shortcuts';
-import { LocalRecordingInfoDialog } from '../../../local-recording';
+import { LocalRecordingButton, LocalRecordingInfoDialog } from '../../../local-recording';
 import {
     close as closeParticipantsPane,
     open as openParticipantsPane
@@ -1311,6 +1311,7 @@ class RightToolbox extends Component<Props> {
                         onMouseOut={this._onMouseOut}
                         onMouseOver={this._onMouseOver}>
                         <div className='toolbox-content-items'>
+                            <LocalRecordingButton />
                             {mainMenuAdditionalButtons}
                             {showOverflowMenuButton && <OverflowMenuButton
                                 isOpen={_overflowMenuVisible}

@@ -41,7 +41,7 @@ import { EmbedMeetingDialog } from '../../../embed-meeting';
 import { SharedDocumentButton } from '../../../etherpad';
 import { openFeedbackDialog } from '../../../feedback';
 import { openKeyboardShortcutsDialog } from '../../../keyboard-shortcuts';
-import { LocalRecordingInfoDialog } from '../../../local-recording';
+import { LocalRecordingButton, LocalRecordingInfoDialog } from '../../../local-recording';
 import {
     close as closeParticipantsPane,
     open as openParticipantsPane
@@ -1010,10 +1010,6 @@ class Toolbox extends Component<Props> {
             && <ClosedCaptionButton
                 key='closed-captions'
                 showLabel={true} />,
-            this._shouldShowButton('recording')
-            && <RecordButton
-                key='record'
-                showLabel={true} />,
             this._shouldShowButton('localrecording')
             && <OverflowMenuItem
                 accessibilityLabel={t('toolbar.accessibilityLabel.localRecording')}
@@ -1304,6 +1300,7 @@ class Toolbox extends Component<Props> {
                     <div className='toolbox-content-items'>
                         {this._renderAudioButton()}
                         {this._renderVideoButton()}
+                        <LocalRecordingButton />
                         {mainMenuAdditionalButtons}
                         {showOverflowMenuButton && <OverflowMenuButton
                             isOpen={_overflowMenuVisible}
