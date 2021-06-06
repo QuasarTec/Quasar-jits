@@ -69,7 +69,7 @@ class LocalRecordingButton extends Component<Props, State> {
     }
 
     blobToFile(theBlob, fileName) {
-        const video = new File([theBlob], fileName, { type: 'video/mp4' });
+        const video = new File([theBlob], fileName, { type: 'video/webm' });
 
         return video;
     }
@@ -93,7 +93,7 @@ class LocalRecordingButton extends Component<Props, State> {
                     blob
                 }, '*');
             } else {
-                saveAs(this.blobToFile(blob, `Record from ${new Date().toString()}.mp4`), `Record from ${new Date().toString()}.mp4`);
+                saveAs(this.blobToFile(blob, `Record from ${new Date().toString()}.webm`), `Record from ${new Date().toString()}.webm`);
             }
         });
 
