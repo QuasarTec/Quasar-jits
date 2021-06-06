@@ -1,4 +1,5 @@
 /* @flow */
+/* eslint-disable */
 
 import { saveAs } from 'file-saver';
 import React, { Component } from 'react';
@@ -105,11 +106,14 @@ class LocalRecordingButton extends Component<Props, State> {
         document.removeEventListener('addRemoteStreamToRecord', document);
     }
 
-    findStreams() {
+    async findStreams() {
         const streams = [];
         const streams_ids = [];
         const videoElements = document.getElementsByTagName('video');
         const audioElements = document.getElementsByTagName('audio');
+
+        const userAudioStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        streams.push(userAudioStream);
 
         for (let i = 0; i < videoElements.length; i++) {
             if (streams_ids.indexOf(videoElements[i].captureStream().id) == -1) {
@@ -119,10 +123,19 @@ class LocalRecordingButton extends Component<Props, State> {
                 streams_ids.push(stream.id);
             }
         }
+        if (streams.length === 3) {
+            const emptyCanvas = document.createElement('canvas');
+            const context = emptyCanvas.getContext('2d');
+            context.fillStyle = "black";
+            context.fillRect(50, 50, 100, 100);
+            streams.push(emptyCanvas.captureStream());
+        }
 
         for (let i = 0; i < audioElements.length; i++) {
-            if (streams_ids.indexOf(audioElements[i].captureStream().id) == -1) {
-                const stream = audioElements[i].captureStream();
+            const currentElement = audioElements[i];
+
+            if (streams_ids.indexOf(currentElement.captureStream().id) == -1 && !currentElement.hasAttribute('preload')) {
+                const stream = currentElement.captureStream();
 
                 streams.push(stream);
                 streams_ids.push(stream.id);
@@ -132,9 +145,10 @@ class LocalRecordingButton extends Component<Props, State> {
         return streams;
     }
 
-    startRecordingVideo() {
+    async startRecordingVideo() {
+        const streams = await this.findStreams();
         this.setState({
-            recorder: new RecordRTC.MultiStreamRecorder(this.findStreams(), {
+            recorder: new RecordRTC.MultiStreamRecorder(streams, {
                 type: 'video',
                 mimeType: 'video/webm;codecs=h264',
                 video: {
@@ -146,13 +160,14 @@ class LocalRecordingButton extends Component<Props, State> {
                 },
                 ignoreMutedMedia: false
             }),
-            streams: this.findStreams()
-        }, () => {
+            streams
+        }, async () => {
+            const streamsToStop = await this.findStreams();
             this.state.recorder.record();
             document.addEventListener('QuitFromConference', () => {
                 this.stopRecordingVideo();
             });
-            this.setState({ updateStreamsIntrval: setInterval(() => this.state.recorder.resetVideoStreams(this.findStreams()), 5000) });
+            this.setState({ updateStreamsIntrval: setInterval(() => this.state.recorder.resetVideoStreams(streamsToStop), 5000) });
         });
     }
 
