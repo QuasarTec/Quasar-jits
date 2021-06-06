@@ -253,10 +253,6 @@ class WelcomePage extends AbstractWelcomePage {
                             </button>
                         </div>
 
-                        <button className = 'install-pwa'>
-                            Установить приложение
-                        </button>
-
                         { _moderatedRoomServiceUrl && (
                             <div id = 'moderated-meetings'>
                                 <p>
