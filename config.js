@@ -146,7 +146,7 @@ var config = {
     constraints: {
         video: {
             height: {
-                ideal: 360,
+                ideal: 720,
                 max: 720,
                 min: 240
             }
