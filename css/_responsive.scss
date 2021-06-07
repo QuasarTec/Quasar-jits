@@ -15,14 +15,13 @@
         }
 
         .enter_room {
+            align-items: flex-start;
             position: relative;
-            height: 42px;
+            flex-direction: column;
 
             .welcome-page-button {
+                margin-top: 10px;
                 font-size: 16px;
-                left: 0;
-                position: absolute;
-                top: 80px;
                 text-align: center;
                 width: 100%;
             }
@@ -60,8 +59,7 @@
 
         &.without-content {
             .header {
-                height: 100%;
-                padding-bottom: 0;
+                padding-bottom: 50px;
             }
         }
 
