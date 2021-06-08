@@ -14,7 +14,7 @@
             display: none;
         }
 
-        .enter_room {
+        .header .enter_room {
             align-items: flex-start;
             position: relative;
             flex-direction: column;
@@ -35,6 +35,10 @@
             .enter_room {
                 .enter-room-input-container {
                     padding-right: 0;
+
+                    .enter-room-input {
+                        width: 150%;
+                    }
                 }
 
                 .warning-without-link,
