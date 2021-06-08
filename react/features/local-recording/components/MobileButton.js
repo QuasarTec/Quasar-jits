@@ -171,7 +171,7 @@ class MobileButton extends Component<Props, State> {
                 type: 'video',
                 video: {
                     height: 720,
-                    width: 1280
+                    width: 405
                 },
                 mimeType: 'video/webm\;codecs=vp9',
                 ignoreMutedMedia: false
