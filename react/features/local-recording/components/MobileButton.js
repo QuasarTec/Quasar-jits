@@ -169,6 +169,10 @@ class MobileButton extends Component<Props, State> {
         this.setState({
             recorder: new RecordRTC.MultiStreamRecorder(streams, {
                 type: 'video',
+                video: {
+                    height: 720,
+                    width: 1280
+                },
                 mimeType: 'video/webm\;codecs=vp9',
                 ignoreMutedMedia: false
             }),
