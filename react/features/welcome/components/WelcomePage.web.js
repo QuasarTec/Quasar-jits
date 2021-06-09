@@ -178,7 +178,15 @@ class WelcomePage extends AbstractWelcomePage {
     joinOtherRoom = () => {
         const { joinRoomName } = this.state;
 
-        window.location.href += joinRoomName;
+        if (/http/.test(joinRoomName)) {
+            const joinUrl = new URL(joinRoomName);
+
+            if (joinUrl.origin === window.location.origin) {
+                window.location.href = joinUrl;
+            }
+        } else if (!/http/.test(joinRoomName)) {
+            window.location.href += joinRoomName;
+        }
     }
 
     /**
@@ -198,102 +206,101 @@ class WelcomePage extends AbstractWelcomePage {
 
         return (
             <div
-                className={`welcome ${contentClassName} ${footerClassName}`}
-                id='welcome_page'>
+                className = { `welcome ${contentClassName} ${footerClassName}` }
+                id = 'welcome_page'>
                 <nav>
                     <img
-                        className='connect-logo'
-                        src='../../../../images/watermark.svg' />
+                        className = 'connect-logo'
+                        src = '../../../../images/watermark.svg' />
 
-                    <div className='links'>
-                        <a href='https://easy-stars.ru/'>Quasar Technology</a>
-                        <a href='https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
-                        <a href='https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
-                        <a href='https://t.me/quasar_infobot'>Контакты</a>
+                    <div className = 'links'>
+                        <a href = 'https://easy-stars.ru/'>Quasar Technology</a>
+                        <a href = 'https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
+                        <a href = 'https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
+                        <a href = 'https://t.me/quasar_infobot'>Контакты</a>
                     </div>
 
                     <SettingsButton
-                        defaultTab={SETTINGS_TABS.CALENDAR} />
+                        defaultTab = { SETTINGS_TABS.CALENDAR } />
                     {showAdditionalToolbarContent
                         ? <div
-                            className='settings-toolbar-content'
-                            ref={this._setAdditionalToolbarContentRef} />
+                            className = 'settings-toolbar-content'
+                            ref = { this._setAdditionalToolbarContentRef } />
                         : null
                     }
                 </nav>
 
-                <div className='header'>
-                    <div className='header-image' />
-                    <div className='header-container'>
-                        <h1 className='header-text-title'>
+                <div className = 'header'>
+                    <div className = 'header-image' />
+                    <div className = 'header-container'>
+                        <h1 className = 'header-text-title'>
                             Connecting people
                         </h1>
-                        <span className='header-text-subtitle'>
+                        <span className = 'header-text-subtitle'>
                             {t('welcomepage.headerSubtitle')}
                         </span>
-                        <div className='enter_room'>
-                            <div className='enter-room-input-container'>
-                                <form onSubmit={this._onFormSubmit}>
+                        <div className = 'enter_room'>
+                            <div className = 'enter-room-input-container'>
+                                <form onSubmit = { this._onFormSubmit }>
                                     <input
-                                        aria-disabled='false'
-                                        aria-label='Meeting name input'
-                                        autoFocus={true}
-                                        className='enter-room-input'
-                                        id='enter_room_field'
-                                        onChange={this._onRoomChange}
-                                        pattern={ROOM_NAME_VALIDATE_PATTERN_STR}
-                                        placeholder={this.state.roomPlaceholder}
-                                        ref={this._setRoomInputRef}
-                                        title={t('welcomepage.roomNameAllowedChars')}
-                                        type='text'
-                                        value={this.state.room} />
+                                        aria-disabled = 'false'
+                                        aria-label = 'Meeting name input'
+                                        autoFocus = { true }
+                                        className = 'enter-room-input'
+                                        id = 'enter_room_field'
+                                        onChange = { this._onRoomChange }
+                                        pattern = { ROOM_NAME_VALIDATE_PATTERN_STR }
+                                        placeholder = { this.state.roomPlaceholder }
+                                        ref = { this._setRoomInputRef }
+                                        title = { t('welcomepage.roomNameAllowedChars') }
+                                        type = 'text'
+                                        value = { this.state.room } />
                                     <div
-                                        className={_moderatedRoomServiceUrl
+                                        className = { _moderatedRoomServiceUrl
                                             ? 'warning-with-link'
-                                            : 'warning-without-link'}>
+                                            : 'warning-without-link' }>
                                         {this._renderInsecureRoomNameWarning()}
                                     </div>
                                 </form>
                             </div>
                             <button
-                                aria-disabled='false'
-                                aria-label='Старт'
-                                className='welcome-page-button'
-                                id='enter_room_button'
-                                onClick={this._onFormSubmit}
-                                tabIndex='0'
-                                type='button'>
+                                aria-disabled = 'false'
+                                aria-label = 'Старт'
+                                className = 'welcome-page-button'
+                                id = 'enter_room_button'
+                                onClick = { this._onFormSubmit }
+                                tabIndex = '0'
+                                type = 'button'>
                                 <ButtonIcon />
                                 СТАРТ
                             </button>
                         </div>
 
-                        <div className='enter_room join_room'>
-                            <div className='enter-room-input-container'>
+                        <div className = 'enter_room join_room'>
+                            <div className = 'enter-room-input-container'>
                                 <form>
                                     <input
-                                        className='enter-room-input'
-                                        onChange={this.changeJoinRoomName}
-                                        pattern={ROOM_NAME_VALIDATE_PATTERN_STR}
-                                        placeholder='Присоединиться к комнате'
-                                        ref={this._setRoomInputRef}
-                                        type='text' />
+                                        className = 'enter-room-input'
+                                        onChange = { this.changeJoinRoomName }
+                                        placeholder = 'Присоединиться к комнате'
+                                        ref = { this._setRoomInputRef }
+                                        type = 'text' />
                                 </form>
                             </div>
                             <button
-                                aria-disabled='false'
-                                aria-label='Старт'
-                                className='welcome-page-button'
-                                id='enter_room_button'
-                                onClick={this.joinOtherRoom}
-                                tabIndex='0'
-                                type='button'>
+                                aria-disabled = 'false'
+                                aria-label = 'Старт'
+                                className = 'welcome-page-button'
+                                id = 'enter_room_button'
+                                onClick = { this.joinOtherRoom }
+                                tabIndex = '0'
+                                type = 'button'>
                                 Присоединиться
                             </button>
                         </div>
 
                         {_moderatedRoomServiceUrl && (
-                            <div id='moderated-meetings'>
+                            <div id = 'moderated-meetings'>
                                 <p>
                                     {
                                         translateToHTML(
@@ -304,60 +311,60 @@ class WelcomePage extends AbstractWelcomePage {
                     </div>
                 </div>
 
-                <div className='welcome-cards-container'>
-                    <div className='welcome-card-row'>
-                        <h1 className='main-title'>История конференций:</h1>
-                        <div className='welcome-tabs welcome-card welcome-card--blue'>
+                <div className = 'welcome-cards-container'>
+                    <div className = 'welcome-card-row'>
+                        <h1 className = 'main-title'>История конференций:</h1>
+                        <div className = 'welcome-tabs welcome-card welcome-card--blue'>
                             {this._renderTabs()}
                         </div>
                         {showAdditionalCard
                             ? <div
-                                className='welcome-card welcome-card--dark'
-                                ref={this._setAdditionalCardRef} />
+                                className = 'welcome-card welcome-card--dark'
+                                ref = { this._setAdditionalCardRef } />
                             : null}
                     </div>
 
                     {showAdditionalContent
                         ? <div
-                            className='welcome-page-content'
-                            ref={this._setAdditionalContentRef} />
+                            className = 'welcome-page-content'
+                            ref = { this._setAdditionalContentRef } />
                         : null}
                 </div>
-                <footer className='footer-info'>
-                    <div className='container left'>
-                        <img src='../../../../images/quasar-tech.svg' />
-                        <img src='../../../../images/watermark.svg' />
-                        <img src='../../../../images/quasar-messenger.svg' />
+                <footer className = 'footer-info'>
+                    <div className = 'container left'>
+                        <img src = '../../../../images/quasar-tech.svg' />
+                        <img src = '../../../../images/watermark.svg' />
+                        <img src = '../../../../images/quasar-messenger.svg' />
                     </div>
-                    <div className='container center'>
-                        <div className='links'>
-                            <a href='https://easy-stars.ru/'>Quasar Technology</a>
-                            <a href='https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
-                            <a href='https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
-                            <a href='https://t.me/quasar_infobot'>Контакты</a>
+                    <div className = 'container center'>
+                        <div className = 'links'>
+                            <a href = 'https://easy-stars.ru/'>Quasar Technology</a>
+                            <a href = 'https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
+                            <a href = 'https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
+                            <a href = 'https://t.me/quasar_infobot'>Контакты</a>
                         </div>
 
                         <p>Компания Quasar Technology © 2021</p>
                     </div>
-                    <div className='container right'>
-                        <a>Ознакомьтесь<br /> с <span className='underline'>политикой конфиденциальности</span></a>
-                        <img src='../../../../images/qcloud.svg' />
+                    <div className = 'container right'>
+                        <a>Ознакомьтесь<br /> с <span className = 'underline'>политикой конфиденциальности</span></a>
+                        <img src = '../../../../images/qcloud.svg' />
                     </div>
                 </footer>
-                <footer className='footer-info-mobile'>
-                    <div className='logos'>
-                        <div className='logo-top logo'>
-                            <img src='../../../../images/quasar-tech.svg' />
-                            <img src='../../../../images/quasar-messenger.svg' />
+                <footer className = 'footer-info-mobile'>
+                    <div className = 'logos'>
+                        <div className = 'logo-top logo'>
+                            <img src = '../../../../images/quasar-tech.svg' />
+                            <img src = '../../../../images/quasar-messenger.svg' />
                         </div>
-                        <div className='logo'>
-                            <img src='../../../../images/watermark.svg' />
-                            <img src='../../../../images/qcloud.svg' />
+                        <div className = 'logo'>
+                            <img src = '../../../../images/watermark.svg' />
+                            <img src = '../../../../images/qcloud.svg' />
                         </div>
                     </div>
 
-                    <div className='text'>
-                        <a>Ознакомьтесь<br /> с <span className='underline'>политикой конфиденциальности</span></a>
+                    <div className = 'text'>
+                        <a>Ознакомьтесь<br /> с <span className = 'underline'>политикой конфиденциальности</span></a>
                         <p>Компания Quasar Technology © 2021</p>
                     </div>
                 </footer>
@@ -373,8 +380,8 @@ class WelcomePage extends AbstractWelcomePage {
      */
     _doRenderInsecureRoomNameWarning() {
         return (
-            <div className='insecure-room-name-warning'>
-                <Icon src={IconWarning} />
+            <div className = 'insecure-room-name-warning'>
+                <Icon src = { IconWarning } />
                 <span>
                     {this.props.t('security.insecureRoomNameWarning')}
                 </span>
@@ -436,25 +443,25 @@ class WelcomePage extends AbstractWelcomePage {
             MOBILE_DOWNLOAD_LINK_IOS
         } = interfaceConfig;
 
-        return (<footer className='welcome-footer'>
-            <div className='welcome-footer-centered'>
-                <div className='welcome-footer-padded'>
-                    <div className='welcome-footer-row-block welcome-footer--row-1'>
-                        <div className='welcome-footer-row-1-text'>{t('welcomepage.jitsiOnMobile')}</div>
+        return (<footer className = 'welcome-footer'>
+            <div className = 'welcome-footer-centered'>
+                <div className = 'welcome-footer-padded'>
+                    <div className = 'welcome-footer-row-block welcome-footer--row-1'>
+                        <div className = 'welcome-footer-row-1-text'>{t('welcomepage.jitsiOnMobile')}</div>
                         <a
-                            className='welcome-badge'
-                            href={MOBILE_DOWNLOAD_LINK_IOS}>
-                            <img src='./images/app-store-badge.png' />
+                            className = 'welcome-badge'
+                            href = { MOBILE_DOWNLOAD_LINK_IOS }>
+                            <img src = './images/app-store-badge.png' />
                         </a>
                         <a
-                            className='welcome-badge'
-                            href={MOBILE_DOWNLOAD_LINK_ANDROID}>
-                            <img src='./images/google-play-badge.png' />
+                            className = 'welcome-badge'
+                            href = { MOBILE_DOWNLOAD_LINK_ANDROID }>
+                            <img src = './images/google-play-badge.png' />
                         </a>
                         <a
-                            className='welcome-badge'
-                            href={MOBILE_DOWNLOAD_LINK_F_DROID}>
-                            <img src='./images/f-droid-badge.png' />
+                            className = 'welcome-badge'
+                            href = { MOBILE_DOWNLOAD_LINK_F_DROID }>
+                            <img src = './images/f-droid-badge.png' />
                         </a>
                     </div>
                 </div>
@@ -497,9 +504,9 @@ class WelcomePage extends AbstractWelcomePage {
 
         return (
             <Tabs
-                onSelect={this._onTabSelected}
-                selected={this.state.selectedTab}
-                tabs={tabs} />);
+                onSelect = { this._onTabSelected }
+                selected = { this.state.selectedTab }
+                tabs = { tabs } />);
     }
 
     /**
