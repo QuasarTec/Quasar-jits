@@ -271,7 +271,7 @@ class WelcomePage extends AbstractWelcomePage {
                                 tabIndex = '0'
                                 type = 'button'>
                                 <ButtonIcon />
-                                СТАРТ
+                                Старт
                             </button>
                         </div>
 
