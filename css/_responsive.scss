@@ -15,6 +15,7 @@
         }
 
         .header .enter_room {
+            margin-top: 60px;
             align-items: flex-start;
             position: relative;
             flex-direction: column;
@@ -34,9 +35,11 @@
         .header {
             .enter_room {
                 .enter-room-input-container {
+                    width: 100%;
                     padding-right: 0;
 
                     .enter-room-input {
+                        padding-left: 20px;
                         width: 100%;
                     }
                 }

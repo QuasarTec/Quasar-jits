@@ -250,11 +250,10 @@ class WelcomePage extends AbstractWelcomePage {
                                         id = 'enter_room_field'
                                         onChange = { this._onRoomChange }
                                         pattern = { ROOM_NAME_VALIDATE_PATTERN_STR }
-                                        placeholder = { this.state.roomPlaceholder }
+                                        placeholder = 'Введите название конференции'
                                         ref = { this._setRoomInputRef }
                                         title = { t('welcomepage.roomNameAllowedChars') }
-                                        type = 'text'
-                                        value = { this.state.room } />
+                                        type = 'text' />
                                     <div
                                         className = { _moderatedRoomServiceUrl
                                             ? 'warning-with-link'
@@ -282,7 +281,7 @@ class WelcomePage extends AbstractWelcomePage {
                                     <input
                                         className = 'enter-room-input'
                                         onChange = { this.changeJoinRoomName }
-                                        placeholder = 'Присоединиться к комнате'
+                                        placeholder = 'Введите название комнаты'
                                         ref = { this._setRoomInputRef }
                                         type = 'text' />
                                 </form>
