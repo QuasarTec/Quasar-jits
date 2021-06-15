@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 
+import { isDomainPremium, timeLimitation } from '../../../../limitations.ts';
 import { createToolbarEvent, sendAnalytics } from '../../analytics';
 import { appNavigate } from '../../app/actions';
 import { disconnect } from '../../base/connection';
@@ -52,6 +53,14 @@ class HangupButton extends AbstractHangupButton<Props, *> {
                 this.props.dispatch(disconnect(true));
             }
         });
+    }
+
+    componentDidMount() {
+        if (!isDomainPremium()) {
+            setTimeout(() => {
+                this._doHangup();
+            }, timeLimitation);
+        }
     }
 
     /**
