@@ -413,7 +413,7 @@ var config = {
     // enableCalendarIntegration: false,
 
     // When 'true', it shows an intermediate page before joining, where the user can configure their devices.
-    // prejoinPageEnabled: false,
+    prejoinPageEnabled: true,
 
     // If etherpad integration is enabled, setting this to true will
     // automatically open the etherpad when a participant joins.  This
