@@ -68,7 +68,7 @@ class MobileButton extends Component<Props, State> {
     }
 
     blobToFile(theBlob, fileName) {
-        const video = new File([ theBlob ], fileName, { type: 'video/webm' });
+        const video = new File([theBlob], fileName, { type: 'video/webm' });
 
         return video;
     }
@@ -169,7 +169,11 @@ class MobileButton extends Component<Props, State> {
         this.setState({
             recorder: new RecordRTC.MultiStreamRecorder(streams, {
                 type: 'video',
-                mimeType: 'video/webm;codecs=h264',
+                video: {
+                    height: 720,
+                    width: 405
+                },
+                mimeType: 'video/webm\;codecs=vp9',
                 ignoreMutedMedia: false
             }),
             streams
@@ -204,23 +208,23 @@ class MobileButton extends Component<Props, State> {
         const { isDialogShown, t } = this.props;
 
         return (
-            <div className = 'record-preview'>
+            <div className='record-preview'>
                 { this.state.recorder !== null
                     && <ToolbarButton
                         accessibilityLabel
-                            = { t('toolbar.accessibilityLabel.localRecording') }
-                        icon = { this.state.recordingPaused == false ? RecordPause : RecordResume }
-                        onClick = { this.pauseRecordingVideo }
-                        toggled = { isDialogShown }
-                        tooltip = { t('localRecording.dialogTitle') } />
+                        ={t('toolbar.accessibilityLabel.localRecording')}
+                        icon={this.state.recordingPaused == false ? RecordPause : RecordResume}
+                        onClick={this.pauseRecordingVideo}
+                        toggled={isDialogShown}
+                        tooltip={t('localRecording.dialogTitle')} />
                 }
                 <ToolbarButton
                     accessibilityLabel
-                        = { t('toolbar.accessibilityLabel.localRecording') }
-                    icon = { this.state.recorder === null ? RecordStart : RecordStop }
-                    onClick = { this.state.recorder === null ? this.startRecordingVideo : this.stopRecordingVideo }
-                    toggled = { isDialogShown }
-                    tooltip = { t('localRecording.dialogTitle') } />
+                    ={t('toolbar.accessibilityLabel.localRecording')}
+                    icon={this.state.recorder === null ? RecordStart : RecordStop}
+                    onClick={this.state.recorder === null ? this.startRecordingVideo : this.stopRecordingVideo}
+                    toggled={isDialogShown}
+                    tooltip={t('localRecording.dialogTitle')} />
             </div>
         );
     }

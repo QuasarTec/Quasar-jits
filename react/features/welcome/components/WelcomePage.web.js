@@ -51,7 +51,8 @@ class WelcomePage extends AbstractWelcomePage {
 
             generateRoomnames:
                 interfaceConfig.GENERATE_ROOMNAMES_ON_WELCOME_PAGE,
-            selectedTab: 0
+            selectedTab: 0,
+            joinRoomName: ''
         };
 
         /**
@@ -166,6 +167,28 @@ class WelcomePage extends AbstractWelcomePage {
         document.body.classList.remove('welcome-page');
     }
 
+    changeJoinRoomName = e => {
+        const { value } = e.target;
+
+        this.setState({
+            joinRoomName: value
+        });
+    }
+
+    joinOtherRoom = () => {
+        const { joinRoomName } = this.state;
+
+        if (/http/.test(joinRoomName)) {
+            const joinUrl = new URL(joinRoomName);
+
+            if (joinUrl.origin === window.location.origin) {
+                window.location.href = joinUrl;
+            }
+        } else if (!/http/.test(joinRoomName)) {
+            window.location.href += joinRoomName;
+        }
+    }
+
     /**
      * Implements React's {@link Component#render()}.
      *
@@ -199,7 +222,7 @@ class WelcomePage extends AbstractWelcomePage {
 
                     <SettingsButton
                         defaultTab = { SETTINGS_TABS.CALENDAR } />
-                    { showAdditionalToolbarContent
+                    {showAdditionalToolbarContent
                         ? <div
                             className = 'settings-toolbar-content'
                             ref = { this._setAdditionalToolbarContentRef } />
@@ -214,9 +237,9 @@ class WelcomePage extends AbstractWelcomePage {
                             Connecting people
                         </h1>
                         <span className = 'header-text-subtitle'>
-                            { t('welcomepage.headerSubtitle')}
+                            {t('welcomepage.headerSubtitle')}
                         </span>
-                        <div id = 'enter_room'>
+                        <div className = 'enter_room'>
                             <div className = 'enter-room-input-container'>
                                 <form onSubmit = { this._onFormSubmit }>
                                     <input
@@ -227,16 +250,15 @@ class WelcomePage extends AbstractWelcomePage {
                                         id = 'enter_room_field'
                                         onChange = { this._onRoomChange }
                                         pattern = { ROOM_NAME_VALIDATE_PATTERN_STR }
-                                        placeholder = { this.state.roomPlaceholder }
+                                        placeholder = 'Введите название конференции'
                                         ref = { this._setRoomInputRef }
                                         title = { t('welcomepage.roomNameAllowedChars') }
-                                        type = 'text'
-                                        value = { this.state.room } />
+                                        type = 'text' />
                                     <div
                                         className = { _moderatedRoomServiceUrl
                                             ? 'warning-with-link'
                                             : 'warning-without-link' }>
-                                        { this._renderInsecureRoomNameWarning() }
+                                        {this._renderInsecureRoomNameWarning()}
                                     </div>
                                 </form>
                             </div>
@@ -249,16 +271,39 @@ class WelcomePage extends AbstractWelcomePage {
                                 tabIndex = '0'
                                 type = 'button'>
                                 <ButtonIcon />
-                                СТАРТ
+                                Старт
                             </button>
                         </div>
 
-                        { _moderatedRoomServiceUrl && (
+                        <div className = 'enter_room join_room'>
+                            <div className = 'enter-room-input-container'>
+                                <form>
+                                    <input
+                                        className = 'enter-room-input'
+                                        onChange = { this.changeJoinRoomName }
+                                        placeholder = 'Введите название комнаты'
+                                        ref = { this._setRoomInputRef }
+                                        type = 'text' />
+                                </form>
+                            </div>
+                            <button
+                                aria-disabled = 'false'
+                                aria-label = 'Старт'
+                                className = 'welcome-page-button'
+                                id = 'enter_room_button'
+                                onClick = { this.joinOtherRoom }
+                                tabIndex = '0'
+                                type = 'button'>
+                                Присоединиться
+                            </button>
+                        </div>
+
+                        {_moderatedRoomServiceUrl && (
                             <div id = 'moderated-meetings'>
                                 <p>
                                     {
                                         translateToHTML(
-                                        t, 'welcomepage.moderatedMessage', { url: _moderatedRoomServiceUrl })
+                                            t, 'welcomepage.moderatedMessage', { url: _moderatedRoomServiceUrl })
                                     }
                                 </p>
                             </div>)}
@@ -269,20 +314,20 @@ class WelcomePage extends AbstractWelcomePage {
                     <div className = 'welcome-card-row'>
                         <h1 className = 'main-title'>История конференций:</h1>
                         <div className = 'welcome-tabs welcome-card welcome-card--blue'>
-                            { this._renderTabs() }
+                            {this._renderTabs()}
                         </div>
-                        { showAdditionalCard
+                        {showAdditionalCard
                             ? <div
                                 className = 'welcome-card welcome-card--dark'
                                 ref = { this._setAdditionalCardRef } />
-                            : null }
+                            : null}
                     </div>
 
-                    { showAdditionalContent
+                    {showAdditionalContent
                         ? <div
                             className = 'welcome-page-content'
                             ref = { this._setAdditionalContentRef } />
-                        : null }
+                        : null}
                 </div>
                 <footer className = 'footer-info'>
                     <div className = 'container left'>
@@ -337,7 +382,7 @@ class WelcomePage extends AbstractWelcomePage {
             <div className = 'insecure-room-name-warning'>
                 <Icon src = { IconWarning } />
                 <span>
-                    { this.props.t('security.insecureRoomNameWarning') }
+                    {this.props.t('security.insecureRoomNameWarning')}
                 </span>
             </div>
         );
