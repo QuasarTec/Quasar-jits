@@ -3,10 +3,12 @@
 import _ from 'lodash';
 import React from 'react';
 
+import { maxPeopleAllowed, isDomainPremium } from '../../../../../limitations.ts';
 import VideoLayout from '../../../../../modules/UI/videolayout/VideoLayout';
 import { getConferenceNameForTitle } from '../../../base/conference';
 import { connect, disconnect } from '../../../base/connection';
 import { translate } from '../../../base/i18n';
+import { getParticipantCount } from '../../../base/participants/functions';
 import { connect as reactReduxConnect } from '../../../base/redux';
 import { setColorAlpha } from '../../../base/util';
 import { Chat } from '../../../chat';
@@ -178,8 +180,14 @@ class Conference extends AbstractConference<Props, *> {
         APP.conference.isJoined() && this.props.dispatch(disconnect());
     }
 
-    handleReload() {
+    /**
+     * Reload the page when a connection issues appears.
+     *
+     * @inheritdoc
+     */
+    _onhandleReload() {
         console.log('reload window');
+        // eslint-disable-next-line no-self-assign
         window.location.href = window.location.href;
     }
 
@@ -194,8 +202,13 @@ class Conference extends AbstractConference<Props, *> {
             _isLobbyScreenVisible,
             _isParticipantsPaneVisible,
             _layoutClassName,
-            _showPrejoin
+            _showPrejoin,
+            participantCount
         } = this.props;
+
+        if (!isDomainPremium() && participantCount > maxPeopleAllowed && !APP.conference.isJoined()) {
+            this.props.dispatch(disconnect());
+        }
 
         return (
             <div id = 'layout_wrapper'>
@@ -211,12 +224,16 @@ class Conference extends AbstractConference<Props, *> {
                         <LargeVideo />
                         {!_isParticipantsPaneVisible && <KnockingParticipantList />}
                         <Filmstrip />
-                        {window.innerWidth > 1000 && <button
-                            className = 'reload-button'
-                            onClick = { this.handleReload }><img src = '../../../../../images/qcloud_logo.svg' /></button>}
+                        {window.innerWidth > 1000
+                            && <button
+                                className = 'reload-button'
+                                onClick = { this._onHandleReload }>
+                                <img src = '../../../../../images/qcloud_logo.svg' />
+                            </button>}
                     </div>
 
-                    {_showPrejoin || _isLobbyScreenVisible || (window.innerWidth <= 1000 ? <RightToolbox /> : <Toolbox />)}
+                    {_showPrejoin || _isLobbyScreenVisible
+                        || (window.innerWidth <= 1000 ? <RightToolbox /> : <Toolbox />)}
                     <Chat />
 
                     {this.renderNotificationsContainer()}
@@ -321,7 +338,8 @@ function _mapStateToProps(state) {
         _isParticipantsPaneVisible: getParticipantsPaneOpen(state),
         _layoutClassName: LAYOUT_CLASSNAMES[getCurrentLayout(state)],
         _roomName: getConferenceNameForTitle(state),
-        _showPrejoin: isPrejoinPageVisible(state)
+        _showPrejoin: isPrejoinPageVisible(state),
+        participantCount: getParticipantCount(state)
     };
 }
 
