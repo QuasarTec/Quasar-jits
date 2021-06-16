@@ -220,14 +220,18 @@ class WelcomePage extends AbstractWelcomePage {
                         <a href = 'https://t.me/quasar_infobot'>Контакты</a>
                     </div>
 
-                    <SettingsButton
-                        defaultTab = { SETTINGS_TABS.CALENDAR } />
-                    {showAdditionalToolbarContent
-                        ? <div
-                            className = 'settings-toolbar-content'
-                            ref = { this._setAdditionalToolbarContentRef } />
-                        : null
-                    }
+                    <div>
+                        <button>Войти</button>
+
+                        <SettingsButton
+                            defaultTab = { SETTINGS_TABS.CALENDAR } />
+                        {showAdditionalToolbarContent
+                            ? <div
+                                className = 'settings-toolbar-content'
+                                ref = { this._setAdditionalToolbarContentRef } />
+                            : null
+                        }
+                    </div>
                 </nav>
 
                 <div className = 'header'>
