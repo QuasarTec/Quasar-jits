@@ -153,6 +153,10 @@ const config = {
                     expandProps: 'start'
                 }
             } ]
+        }, {
+            test: /\.(ts|tsx)$/,
+            loader: 'ts-loader',
+            exclude: /node_modules/
         } ]
     },
     node: {

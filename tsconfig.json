@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "target": "es6",
+      "module": "commonjs",
+      "lib": [
+        "esnext",
+        "dom",
+        "dom.iterable"
+      ],
+      "jsx": "react",
+      "sourceMap": true,
+      "outDir": "./build/",
+      "removeComments": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+    }
+  }
