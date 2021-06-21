@@ -228,6 +228,7 @@ body.welcome-page {
         width: 100%;
         box-sizing: border-box;
         padding: 30px 40px;
+        z-index: 999;
 
         .connect-logo {
             width: $welcomePageWatermarkWidth;

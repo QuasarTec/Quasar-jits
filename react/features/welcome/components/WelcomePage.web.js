@@ -14,6 +14,7 @@ import { SettingsButton, SETTINGS_TABS } from '../../settings';
 
 
 import { AbstractWelcomePage, _mapStateToProps } from './AbstractWelcomePage';
+import Login from './Login.tsx';
 import Tabs from './Tabs';
 
 /**
@@ -52,7 +53,8 @@ class WelcomePage extends AbstractWelcomePage {
             generateRoomnames:
                 interfaceConfig.GENERATE_ROOMNAMES_ON_WELCOME_PAGE,
             selectedTab: 0,
-            joinRoomName: ''
+            joinRoomName: '',
+            isLoginPromptOpen: false
         };
 
         /**
@@ -189,6 +191,12 @@ class WelcomePage extends AbstractWelcomePage {
         }
     }
 
+    changeLoginPromptVisibility = isOpened => {
+        this.setState({
+            isLoginPromptOpen: isOpened
+        });
+    }
+
     /**
      * Implements React's {@link Component#render()}.
      *
@@ -196,6 +204,7 @@ class WelcomePage extends AbstractWelcomePage {
      * @returns {ReactElement|null}
      */
     render() {
+        const { isLoginPromptOpen } = this.state;
         const { _moderatedRoomServiceUrl, t } = this.props;
         const { DEFAULT_WELCOME_PAGE_LOGO_URL, DISPLAY_WELCOME_FOOTER } = interfaceConfig;
         const showAdditionalCard = this._shouldShowAdditionalCard();
@@ -208,6 +217,14 @@ class WelcomePage extends AbstractWelcomePage {
             <div
                 className = { `welcome ${contentClassName} ${footerClassName}` }
                 id = 'welcome_page'>
+
+                { isLoginPromptOpen
+                    && <Login
+                        closeLoginPrompt = { () => {
+                            this.changeLoginPromptVisibility(false);
+                        } } />
+                }
+
                 <nav>
                     <img
                         className = 'connect-logo'
@@ -220,8 +237,14 @@ class WelcomePage extends AbstractWelcomePage {
                         <a href = 'https://t.me/quasar_infobot'>Контакты</a>
                     </div>
 
-                    <div>
-                        <button>Войти</button>
+                    <div style = {{ display: 'flex', alignItems: 'center' }}>
+                        <button
+                            className = 'login-button'
+                            onClick = { () => {
+                                this.changeLoginPromptVisibility(true);
+                            } }>
+                            Войти
+                        </button>
 
                         <SettingsButton
                             defaultTab = { SETTINGS_TABS.CALENDAR } />
