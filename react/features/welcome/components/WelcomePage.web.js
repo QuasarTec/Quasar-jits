@@ -237,14 +237,16 @@ class WelcomePage extends AbstractWelcomePage {
                         <a href = 'https://t.me/quasar_infobot'>Контакты</a>
                     </div>
 
-                    <div style = {{ display: 'flex', alignItems: 'center' }}>
-                        <button
+                    <div
+                        style = {{ display: 'flex',
+                            alignItems: 'center' }}>
+                        { !localStorage.getItem('username') && <button
                             className = 'login-button'
                             onClick = { () => {
                                 this.changeLoginPromptVisibility(true);
                             } }>
                             Войти
-                        </button>
+                        </button> }
 
                         <SettingsButton
                             defaultTab = { SETTINGS_TABS.CALENDAR } />

@@ -9,6 +9,7 @@ interface Props {
 interface InnerProps extends Props {
     handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void,
     handleSubmit: () => void,
+    isEnteringCode: boolean,
     error: string
 }
 
@@ -56,7 +57,7 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
             body: {
                 code: confirmationCode
             },
-            callback: () => changeIsEnteringCode(true),
+            callback: () => closeLoginPrompt(),
             error: 'Неверный код'
         }
     };
@@ -68,6 +69,7 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
         const res = await requestApi(address, body);
 
         if (res.status === 'OK') {
+            isEnteringCode && localStorage.setItem('username', res.username);
             callback();
         } else {
             setError(optionError);
@@ -85,11 +87,14 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
             closeLoginPrompt = { closeLoginPrompt }
             error = { error }
             handleInput = { handleInput }
-            handleSubmit = { handleSubmit } />
+            handleSubmit = { handleSubmit }
+            isEnteringCode = { isEnteringCode } />
     );
 };
 
-const InnerLogin: FC<InnerProps> = ({ closeLoginPrompt, handleInput, handleSubmit, error }: InnerProps) => (
+const InnerLogin: FC<InnerProps> = ({
+    closeLoginPrompt, handleInput, handleSubmit, error, isEnteringCode
+}: InnerProps) => (
     <div className = 'login'>
         <div className = 'login-form'>
             <div className = 'login-top'>
@@ -103,8 +108,9 @@ const InnerLogin: FC<InnerProps> = ({ closeLoginPrompt, handleInput, handleSubmi
 
             <input
                 className = 'interactive login-input'
+                key = { `isEnteringCode${isEnteringCode}` }
                 onChange = { handleInput }
-                placeholder = 'Введите имя пользователя'
+                placeholder = { isEnteringCode ? 'Введите код подтверждения' : 'Введите имя пользователя' }
                 type = 'text' />
 
             {error && <p className = 'error'>{error}</p>}
