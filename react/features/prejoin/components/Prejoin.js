@@ -192,8 +192,6 @@ class Prejoin extends Component<Props, State> {
 
         if (isDomainPremium && !isPaid) {
             window.location.href = defaultDomain;
-        } else if (!isDomainPremium && isPaid) {
-            window.location.href = premiumDomain;
         }
     }
 
