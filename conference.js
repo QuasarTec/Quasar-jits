@@ -2018,7 +2018,7 @@ export default {
                 return;
             }
 
-            if (!isDomainPremium() && user._role === 'moderator') {
+            if (!isDomainPremium && user._role === 'moderator') {
                 APP.store.dispatch(disconnectAction());
             }
 

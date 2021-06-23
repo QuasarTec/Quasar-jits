@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { default as ButtonIcon } from '../../../../images/button-icon.svg';
+import { isDomainPremium, defaultDomain, premiumDomain, isUserPaid } from '../../../../limitations.ts';
 import { isMobileBrowser } from '../../base/environment/utils';
 import { translate, translateToHTML } from '../../base/i18n';
 import { Icon, IconWarning } from '../../base/icons';
@@ -129,8 +130,16 @@ class WelcomePage extends AbstractWelcomePage {
      * @inheritdoc
      * @returns {void}
      */
-    componentDidMount() {
+    async componentDidMount() {
         super.componentDidMount();
+
+        const isPaid = await isUserPaid();
+
+        if (isDomainPremium && !isPaid) {
+            window.location.href = defaultDomain;
+        } else if (!isDomainPremium && isPaid) {
+            window.location.href = premiumDomain;
+        }
 
         document.body.classList.add('welcome-page');
         document.title = interfaceConfig.APP_NAME;
@@ -240,13 +249,23 @@ class WelcomePage extends AbstractWelcomePage {
                     <div
                         style = {{ display: 'flex',
                             alignItems: 'center' }}>
-                        { !localStorage.getItem('username') && <button
-                            className = 'login-button'
-                            onClick = { () => {
-                                this.changeLoginPromptVisibility(true);
-                            } }>
-                            Войти
-                        </button> }
+                        { localStorage.getItem('username')
+                            ? <button
+                                className = 'login-button logout-button'
+                                onClick = { () => {
+                                    localStorage.removeItem('username');
+                                    window.location.href = window.location.href;
+                                } }>
+                                Выйти
+                            </button>
+                            : <button
+                                className = 'login-button'
+                                onClick = { () => {
+                                    this.changeLoginPromptVisibility(true);
+                                } }>
+                                Войти
+                            </button>
+                        }
 
                         <SettingsButton
                             defaultTab = { SETTINGS_TABS.CALENDAR } />

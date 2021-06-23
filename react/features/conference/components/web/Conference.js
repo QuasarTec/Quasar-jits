@@ -206,7 +206,7 @@ class Conference extends AbstractConference<Props, *> {
             participantCount
         } = this.props;
 
-        if (!isDomainPremium() && participantCount > maxPeopleAllowed && !APP.conference.isJoined()) {
+        if (!isDomainPremium && participantCount > maxPeopleAllowed && !APP.conference.isJoined()) {
             this.props.dispatch(disconnect());
         }
 

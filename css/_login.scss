@@ -4,6 +4,10 @@
     padding: 10px 20px;
     background: linear-gradient(to top left,#8743ff,#4136f1);
     font-weight: 600;
+
+    &.logout-button {
+        background: linear-gradient(to top right, #ED213A, #93291E);
+    }
 }
 
 .login {

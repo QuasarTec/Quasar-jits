@@ -3,6 +3,7 @@
 import InlineDialog from '@atlaskit/inline-dialog';
 import React, { Component } from 'react';
 
+import { isDomainPremium, defaultDomain, premiumDomain, isUserPaid } from '../../../../limitations.ts';
 import { getRoomName } from '../../base/conference';
 import { getToolbarButtons } from '../../base/config';
 import { translate } from '../../base/i18n';
@@ -184,6 +185,18 @@ class Prejoin extends Component<Props, State> {
         this._onOptionsClick = this._onOptionsClick.bind(this);
         this._setName = this._setName.bind(this);
     }
+
+    // eslint-disable-next-line require-jsdoc
+    async componentDidMount() {
+        const isPaid = await isUserPaid();
+
+        if (isDomainPremium && !isPaid) {
+            window.location.href = defaultDomain;
+        } else if (!isDomainPremium && isPaid) {
+            window.location.href = premiumDomain;
+        }
+    }
+
     _onJoinButtonClick: () => void;
 
     /**

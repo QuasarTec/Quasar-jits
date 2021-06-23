@@ -69,7 +69,10 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
         const res = await requestApi(address, body);
 
         if (res.status === 'OK') {
-            isEnteringCode && localStorage.setItem('username', res.username);
+            if (isEnteringCode) {
+                localStorage.setItem('username', res.username);
+                window.location.href = window.location.href;
+            }
             callback();
         } else {
             setError(optionError);

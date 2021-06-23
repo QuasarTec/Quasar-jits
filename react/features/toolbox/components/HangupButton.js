@@ -55,8 +55,9 @@ class HangupButton extends AbstractHangupButton<Props, *> {
         });
     }
 
+    // eslint-disable-next-line require-jsdoc
     componentDidMount() {
-        if (!isDomainPremium()) {
+        if (!isDomainPremium) {
             setTimeout(() => {
                 this._doHangup();
             }, timeLimitation);
