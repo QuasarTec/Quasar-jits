@@ -113,7 +113,7 @@ const InnerLogin: FC<InnerProps> = ({
                 className = 'interactive login-input'
                 key = { `isEnteringCode${isEnteringCode}` }
                 onChange = { handleInput }
-                placeholder = { isEnteringCode ? 'Введите код подтверждения' : 'Введите имя пользователя' }
+                placeholder = { isEnteringCode ? 'Код подтверждения' : 'Логин в telegram' }
                 type = 'text' />
 
             {error && <p className = 'error'>{error}</p>}
