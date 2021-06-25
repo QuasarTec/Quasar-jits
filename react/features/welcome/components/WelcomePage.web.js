@@ -16,6 +16,7 @@ import { SettingsButton, SETTINGS_TABS } from '../../settings';
 
 import { AbstractWelcomePage, _mapStateToProps } from './AbstractWelcomePage';
 import Login from './Login.tsx';
+import Register from './Register.tsx';
 import Tabs from './Tabs';
 
 /**
@@ -55,7 +56,8 @@ class WelcomePage extends AbstractWelcomePage {
                 interfaceConfig.GENERATE_ROOMNAMES_ON_WELCOME_PAGE,
             selectedTab: 0,
             joinRoomName: '',
-            isLoginPromptOpen: false
+            isLoginPromptOpen: false,
+            isRegisterWindowOpen: false
         };
 
         /**
@@ -206,6 +208,12 @@ class WelcomePage extends AbstractWelcomePage {
         });
     }
 
+    changeRegisterWindowVisibility = isOpened => {
+        this.setState({
+            isRegisterWindowOpen: isOpened
+        });
+    }
+
     /**
      * Implements React's {@link Component#render()}.
      *
@@ -213,7 +221,7 @@ class WelcomePage extends AbstractWelcomePage {
      * @returns {ReactElement|null}
      */
     render() {
-        const { isLoginPromptOpen } = this.state;
+        const { isLoginPromptOpen, isRegisterWindowOpen } = this.state;
         const { _moderatedRoomServiceUrl, t } = this.props;
         const { DEFAULT_WELCOME_PAGE_LOGO_URL, DISPLAY_WELCOME_FOOTER } = interfaceConfig;
         const showAdditionalCard = this._shouldShowAdditionalCard();
@@ -231,6 +239,12 @@ class WelcomePage extends AbstractWelcomePage {
                     && <Login
                         closeLoginPrompt = { () => {
                             this.changeLoginPromptVisibility(false);
+                        } } />
+                }
+                { isRegisterWindowOpen
+                    && <Register
+                        closeRegisterWindow = { () => {
+                            this.changeRegisterWindowVisibility(false);
                         } } />
                 }
 
