@@ -2,7 +2,7 @@
 /* eslint-disable react/no-multi-comp */
 import React, { FC, useState } from 'react';
 
-import { isDomainPremium, premiumDomain, isUserPaid } from '../../../../limitations';
+import { isDomainPremium, premiumDomain, isUserPaid } from '../../../../limitations.ts';
 
 interface Props {
     closeLoginPrompt: () => void
