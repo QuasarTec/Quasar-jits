@@ -1,6 +1,6 @@
 /* eslint-disable flowtype/no-types-missing-file-annotation */
-const premiumDomain = 'https://localhost:5000/'; // these are just examples and must be changed in production
-const defaultDomain = 'https://localhost:8080/';
+const premiumDomain = 'https://vip.qtconnect.ru/'; // these are just examples and must be changed in production
+const defaultDomain = 'https://qtconnect.ru/';
 
 const premiumDomainRegex = new RegExp(premiumDomain);
 

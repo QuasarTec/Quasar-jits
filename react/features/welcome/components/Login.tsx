@@ -2,6 +2,8 @@
 /* eslint-disable react/no-multi-comp */
 import React, { FC, useState } from 'react';
 
+import { isDomainPremium, premiumDomain, isUserPaid } from '../../../../limitations';
+
 interface Props {
     closeLoginPrompt: () => void
 }
@@ -34,6 +36,29 @@ const requestApi = async (address: string, body: any) => {
     return json;
 };
 
+const checkAfterLogin = async () => {
+    const isPaid = await isUserPaid();
+
+    if (!isDomainPremium && isPaid) {
+        const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: localStorage.getItem('username')
+            })
+        });
+
+        const result = await res.json();
+
+        if (result.hash) {
+            // eslint-disable-next-line prefer-template
+            window.location.href = premiumDomain + `?hash=${result.hash}`;
+        }
+    }
+};
+
 const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
     const [ loginName, changeLoginName ] = useState('');
     const [ confirmationCode, changeConfirmationCode ] = useState('');
@@ -57,7 +82,7 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
             body: {
                 code: confirmationCode
             },
-            callback: () => closeLoginPrompt(),
+            callback: checkAfterLogin,
             error: 'Неверный код'
         }
     };
@@ -71,9 +96,13 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
         if (res.status === 'OK') {
             if (isEnteringCode) {
                 localStorage.setItem('username', res.username);
+            }
+
+            callback();
+
+            if (isEnteringCode) {
                 window.location.href = window.location.href;
             }
-            callback();
         } else {
             setError(optionError);
         }

@@ -135,12 +135,51 @@ class WelcomePage extends AbstractWelcomePage {
     async componentDidMount() {
         super.componentDidMount();
 
+        if (isDomainPremium) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = urlParams.get('hash');
+
+            if (hash) {
+                const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/check-hash', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        hash
+                    })
+                });
+
+                const result = await res.json();
+
+                if (result.username) {
+                    localStorage.setItem('username', result.username);
+                    window.location.href = window.location.href;
+                }
+            }
+        }
+
         const isPaid = await isUserPaid();
 
         if (isDomainPremium && !isPaid) {
             window.location.href = defaultDomain;
         } else if (!isDomainPremium && isPaid) {
-            window.location.href = premiumDomain;
+            const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: localStorage.getItem('username')
+                })
+            });
+
+            const result = await res.json();
+
+            if (result.hash) {
+                // eslint-disable-next-line prefer-template
+                window.location.href = premiumDomain + `?hash=${result.hash}`;
+            }
         }
 
         document.body.classList.add('welcome-page');
@@ -257,7 +296,7 @@ class WelcomePage extends AbstractWelcomePage {
                         <a href = 'https://easy-stars.ru/'>Quasar Technology</a>
                         <a href = 'https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
                         <a href = 'https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
-                        <a href = 'https://t.me/quasar_infobot'>Контакты</a>
+                        <a href = 'https://t.me/joinchat/K5fKWxce4tlkMWMy'>Контакты</a>
                     </div>
 
                     <div
@@ -411,7 +450,7 @@ class WelcomePage extends AbstractWelcomePage {
                             <a href = 'https://easy-stars.ru/'>Quasar Technology</a>
                             <a href = 'https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
                             <a href = 'https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
-                            <a href = 'https://t.me/quasar_infobot'>Контакты</a>
+                            <a href = 'https://t.me/joinchat/K5fKWxce4tlkMWMy'>Контакты</a>
                         </div>
 
                         <p>Компания Quasar Technology © 2021</p>
