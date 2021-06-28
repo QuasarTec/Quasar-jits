@@ -163,7 +163,7 @@ class WelcomePage extends AbstractWelcomePage {
 
                 if (result.username) {
                     localStorage.setItem('username', result.username);
-                    window.location.href = window.location.href;
+                    window.location.href = window.location.href.split('?')[0];
                 }
             }
         }
@@ -293,7 +293,9 @@ class WelcomePage extends AbstractWelcomePage {
                     <div className = 'error-background'>
                         <div className = 'errorQuery'>
                             <div className = 'close-container'>
-                                <button className = 'close' onClick={ this.removeError }>
+                                <button
+                                    className = 'close'
+                                    onClick = { this.removeError }>
                                     Закрыть
                                 </button>
                             </div>
