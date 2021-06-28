@@ -272,13 +272,22 @@ class WelcomePage extends AbstractWelcomePage {
                                 } }>
                                 Выйти
                             </button>
-                            : <button
-                                className = 'login-button'
-                                onClick = { () => {
-                                    this.changeLoginPromptVisibility(true);
-                                } }>
-                                Войти
-                            </button>
+                            : <div className = 'login-buttons-group'>
+                                <button
+                                    className = 'login-button'
+                                    onClick = { () => {
+                                        this.changeLoginPromptVisibility(true);
+                                    } }>
+                                    Войти
+                                </button>
+                                <button
+                                    className = 'login-button'
+                                    onClick = { () => {
+                                        this.changeRegisterWindowVisibility(true);
+                                    } }>
+                                    Регистрация
+                                </button>
+                            </div>
                         }
 
                         <SettingsButton

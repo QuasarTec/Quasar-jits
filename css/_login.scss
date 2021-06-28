@@ -1,3 +1,7 @@
+.login-buttons-group {
+    display: flex;
+}
+
 .login-button {
     margin-right: 15px;
     border: none;
@@ -59,7 +63,7 @@
             }
             
             &.login-input {
-                width: 30vw;
+                width: 20vw;
                 background-color: aliceblue;
                 color: black;
                 margin-bottom: 15px;
@@ -81,6 +85,18 @@
 }
 
 @media screen and (max-width: 700px) {
+    .login-buttons-group {
+        flex-direction: column;
+    }
+
+    .login-button {
+        margin: 0 25px 0 15px;
+
+        &:first-child {
+            margin-bottom: 10px;
+        }
+    }
+
     .login .login-form .interactive.login-input {
         width: 70vw;
     }
