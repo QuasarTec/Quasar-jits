@@ -27,7 +27,8 @@ interface Props {
 
 interface InnerProps extends Props {
     updateState: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    handleSubmit: () => void
+    handleSubmit: () => void,
+    errors: string[]
 }
 
 const Register: FC<Props> = ({ closeRegisterWindow }: Props) => {
@@ -35,6 +36,7 @@ const Register: FC<Props> = ({ closeRegisterWindow }: Props) => {
     const [ email, changeEmail ] = useState('');
     const [ password, changePassword ] = useState('');
     const [ referral, changeRefferal ] = useState('');
+    const [ errors, setErrors ] = useState<string[]>([]);
 
     const hooks: HooksInterface = {
         [HooksNames.username]: changeUsername,
@@ -57,15 +59,39 @@ const Register: FC<Props> = ({ closeRegisterWindow }: Props) => {
         
         const res = await fetch(`https://api.easy-stars.ru/api/query/user/register`, {
             method: 'POST',
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded',
+            },
             body: query
         });
+
+        const result = await res.json();
+
+        if (result.status === 'error') {
+            const response = result.response_text;
+            const keys = Object.keys(response);
+
+            const resErrors: string[] = [];
+
+            for (const key of keys) {
+                response[key].map((err: string) => {
+                    resErrors.push(err);
+                });
+            }
+
+            setErrors(resErrors);
+        } else {
+            localStorage.setItem('username', username);
+            window.location.href = window.location.href;
+        }
     }
 
     return (
         <InnerRegister
             closeRegisterWindow = { closeRegisterWindow }
             handleSubmit = { submitData }
-            updateState = { updateStateFromInput } />
+            updateState = { updateStateFromInput }
+            errors = { errors } />
     );
 };
 
@@ -94,7 +120,7 @@ const inputData: Input[] = [
 ];
 
 const InnerRegister: FC<InnerProps> = ({
-    closeRegisterWindow, updateState, handleSubmit
+    closeRegisterWindow, updateState, handleSubmit, errors
 }: InnerProps) =>
     (<div className = 'login'>
         <div className = 'login-form'>
@@ -131,6 +157,10 @@ const InnerRegister: FC<InnerProps> = ({
                     return Input;
                 })
             }
+
+            { errors.length > 0 && errors.map(err => (
+                <div className="error" key={err}>{err}</div>
+            )) }
 
             <button
                 className = 'interactive login-submit'
