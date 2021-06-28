@@ -137,7 +137,7 @@ class WelcomePage extends AbstractWelcomePage {
 
         if (isDomainPremium) {
             const urlParams = new URLSearchParams(window.location.search);
-            const hash = urlParams.get('hash');
+            const hash = urlParams.get('userHash');
 
             if (hash) {
                 const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/check-hash', {
@@ -178,7 +178,7 @@ class WelcomePage extends AbstractWelcomePage {
 
             if (result.hash) {
                 // eslint-disable-next-line prefer-template
-                window.location.href = premiumDomain + `?hash=${result.hash}`;
+                window.location.href = premiumDomain + `?userHash=${result.hash}`;
             }
         }
 
