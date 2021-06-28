@@ -3,7 +3,7 @@
 import InlineDialog from '@atlaskit/inline-dialog';
 import React, { Component } from 'react';
 
-import { isDomainPremium, defaultDomain, premiumDomain, isUserPaid } from '../../../../limitations.ts';
+import { isDomainPremium, defaultDomain, isUserPaid } from '../../../../limitations.ts';
 import { getRoomName } from '../../base/conference';
 import { getToolbarButtons } from '../../base/config';
 import { translate } from '../../base/i18n';
