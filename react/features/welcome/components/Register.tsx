@@ -55,7 +55,10 @@ const Register: FC<Props> = ({ closeRegisterWindow }: Props) => {
 
         const query = stringify(body);
         
-        // const res = await fetch(`https://api.easy-stars.ru/api/query/user/register?${query}`);
+        const res = await fetch(`https://api.easy-stars.ru/api/query/user/register`, {
+            method: 'POST',
+            body: query
+        });
     }
 
     return (
@@ -106,7 +109,7 @@ const InnerRegister: FC<InnerProps> = ({
 
             {
                 inputData.map(({ type, name, placeholder, optional }) => {
-                    const Input = () => (
+                    const Input = (
                         <input
                             className = 'interactive login-input'
                             type = { type }
@@ -118,14 +121,14 @@ const InnerRegister: FC<InnerProps> = ({
 
                     if (optional) {
                         return (
-                            <div>
-                                <Input />
+                            <div key = { name }>
+                                { Input }
                                 <p>*Необязательно</p>
                             </div>
                         )
                     }
 
-                    return <Input />;
+                    return Input;
                 })
             }
 

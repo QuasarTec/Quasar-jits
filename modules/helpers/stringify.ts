@@ -1,5 +1,5 @@
 /* eslint-disable flowtype/no-types-missing-file-annotation */
-const stringify = (data: any) => {
+const stringify = (data: any): string => {
     const result = [];
 
     for (const prop in data) {
