@@ -1,7 +1,10 @@
 // @flow
 
+import React from 'react';
 import type { Dispatch } from 'redux';
 
+import { isDomainPremium } from '../../../../../limitations.ts';
+import { openDialog, Dialog } from '../../../base/dialog';
 import { translate } from '../../../base/i18n';
 import { IconShareVideo } from '../../../base/icons';
 import { connect } from '../../../base/redux';
@@ -49,7 +52,18 @@ class SharedVideoButton extends AbstractButton<Props, *> {
      * @returns {void}
      */
     _handleClick() {
-        this._doToggleSharedVideoDialog();
+        if (isDomainPremium) {
+            this._doToggleSharedVideoDialog();
+        } else {
+            const { dispatch } = this.props;
+
+            dispatch(openDialog(() => (
+                <Dialog
+                    okDisabled = { true }>
+                    Данная функция доступна в оплаченной Connect комнате
+                </Dialog>
+            )));
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 // @flow
+import React from 'react';
 
-import { openDialog } from '../../base/dialog';
+import { isDomainPremium } from '../../../../limitations.ts';
+import { openDialog, Dialog } from '../../base/dialog';
 import { IconCrown } from '../../base/icons';
 import {
     getLocalParticipant,
@@ -47,7 +49,16 @@ export default class AbstractGrantModeratorButton extends AbstractButton<Props, 
   _handleClick() {
       const { dispatch, participantID } = this.props;
 
-      dispatch(openDialog(GrantModeratorDialog, { participantID }));
+      if (isDomainPremium) {
+          dispatch(openDialog(GrantModeratorDialog, { participantID }));
+      } else {
+          dispatch(openDialog(() => (
+              <Dialog
+                  okDisabled = { true }>
+                Назначение безлимитного количества модераторов доступно в оплаченной Connect комнате
+              </Dialog>
+          )));
+      }
   }
 }
 

@@ -1,5 +1,5 @@
 /* eslint-disable flowtype/no-types-missing-file-annotation */
-const premiumDomain = 'https://vip.qtconnect.ru/'; // these are just examples and must be changed in production
+const premiumDomain = 'https://vip.qtconnect.ru/';
 const defaultDomain = 'https://qtconnect.ru/';
 
 const premiumDomainRegex = new RegExp(premiumDomain);
@@ -30,9 +30,10 @@ const isUserPaid = async (): Promise<boolean> => {
     return isPayed;
 };
 
-const maxPeopleAllowed = 2; // this one will be changed
-const timeLimitation = 1000 * 10; // and this too
+const maxPeopleAllowed = 110;
+const timeLimitation = 60000 * 50;
+const timeTillNotification = 60000 * 40;
 
-export { isDomainPremium, maxPeopleAllowed, timeLimitation, isUserPaid };
+export { isDomainPremium, maxPeopleAllowed, timeLimitation, isUserPaid, timeTillNotification };
 
 export { premiumDomain, defaultDomain };

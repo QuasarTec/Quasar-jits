@@ -1,6 +1,7 @@
 // @flow
-
-import { openDialog } from '../../../base/dialog';
+import React from 'react';
+import { isDomainPremium } from '../../../../../limitations.ts';
+import { openDialog, Dialog } from '../../../base/dialog';
 import { IconLiveStreaming } from '../../../base/icons';
 import { JitsiRecordingConstants } from '../../../base/lib-jitsi-meet';
 import {
@@ -76,9 +77,18 @@ export default class AbstractLiveStreamButton<P: Props> extends AbstractButton<P
     _handleClick() {
         const { _isLiveStreamRunning, dispatch } = this.props;
 
-        dispatch(openDialog(
+        if (isDomainPremium) {
+            dispatch(openDialog(
             _isLiveStreamRunning ? StopLiveStreamDialog : StartLiveStreamDialog
-        ));
+            ));
+        } else {
+            dispatch(openDialog(() => (
+                <Dialog
+                    okDisabled = { true }>
+                    Данная функция доступна в оплаченной Connect комнате
+                </Dialog>
+            )));
+        }
     }
 
     /**

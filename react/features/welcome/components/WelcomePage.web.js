@@ -57,7 +57,8 @@ class WelcomePage extends AbstractWelcomePage {
             selectedTab: 0,
             joinRoomName: '',
             isLoginPromptOpen: false,
-            isRegisterWindowOpen: false
+            isRegisterWindowOpen: false,
+            error: ''
         };
 
         /**
@@ -135,8 +136,16 @@ class WelcomePage extends AbstractWelcomePage {
     async componentDidMount() {
         super.componentDidMount();
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const err = urlParams.get('error');
+
+        if (err) {
+            this.setState({
+                error: err
+            });
+        }
+
         if (isDomainPremium) {
-            const urlParams = new URLSearchParams(window.location.search);
             const hash = urlParams.get('userHash');
 
             if (hash) {
@@ -253,6 +262,12 @@ class WelcomePage extends AbstractWelcomePage {
         });
     }
 
+    removeError = () => {
+        this.setState({
+            error: ''
+        });
+    }
+
     /**
      * Implements React's {@link Component#render()}.
      *
@@ -260,7 +275,7 @@ class WelcomePage extends AbstractWelcomePage {
      * @returns {ReactElement|null}
      */
     render() {
-        const { isLoginPromptOpen, isRegisterWindowOpen } = this.state;
+        const { isLoginPromptOpen, isRegisterWindowOpen, error } = this.state;
         const { _moderatedRoomServiceUrl, t } = this.props;
         const { DEFAULT_WELCOME_PAGE_LOGO_URL, DISPLAY_WELCOME_FOOTER } = interfaceConfig;
         const showAdditionalCard = this._shouldShowAdditionalCard();
@@ -273,6 +288,19 @@ class WelcomePage extends AbstractWelcomePage {
             <div
                 className = { `welcome ${contentClassName} ${footerClassName}` }
                 id = 'welcome_page'>
+
+                { error && (
+                    <div className = 'error-background'>
+                        <div className = 'errorQuery'>
+                            <div className = 'close-container'>
+                                <button className = 'close' onClick={ this.removeError }>
+                                    Закрыть
+                                </button>
+                            </div>
+                            <p>{ error }</p>
+                        </div>
+                    </div>
+                ) }
 
                 { isLoginPromptOpen
                     && <Login
