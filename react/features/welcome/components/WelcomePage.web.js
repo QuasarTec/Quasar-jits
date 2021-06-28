@@ -135,12 +135,51 @@ class WelcomePage extends AbstractWelcomePage {
     async componentDidMount() {
         super.componentDidMount();
 
+        if (isDomainPremium) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hash = urlParams.get('hash');
+
+            if (hash) {
+                const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/check-hash', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        hash
+                    })
+                });
+
+                const result = await res.json();
+
+                if (result.username) {
+                    localStorage.setItem('username', result.username);
+                    window.location.href = window.location.href;
+                }
+            }
+        }
+
         const isPaid = await isUserPaid();
 
         if (isDomainPremium && !isPaid) {
             window.location.href = defaultDomain;
         } else if (!isDomainPremium && isPaid) {
-            window.location.href = premiumDomain;
+            const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: localStorage.getItem('username')
+                })
+            });
+
+            const result = await res.json();
+
+            if (result.hash) {
+                // eslint-disable-next-line prefer-template
+                window.location.href = premiumDomain + `?hash=${result.hash}`;
+            }
         }
 
         document.body.classList.add('welcome-page');
