@@ -167,9 +167,9 @@ class WelcomePage extends AbstractWelcomePage {
 
         const isPaid = await isUserPaid();
 
-        if (isDomainPremium && !isPaid) {
+        if (isDomainPremium && !isPaid && !hash) {
             window.location.href = defaultDomain;
-        } else if (!isDomainPremium && isPaid && !hash) {
+        } else if (!isDomainPremium && isPaid) {
             const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
                 method: 'POST',
                 headers: {
