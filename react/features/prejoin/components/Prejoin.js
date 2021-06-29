@@ -186,15 +186,6 @@ class Prejoin extends Component<Props, State> {
         this._setName = this._setName.bind(this);
     }
 
-    // eslint-disable-next-line require-jsdoc
-    async componentDidMount() {
-        const isPaid = await isUserPaid();
-
-        if (isDomainPremium && !isPaid) {
-            window.location.href = defaultDomain;
-        }
-    }
-
     _onJoinButtonClick: () => void;
 
     /**
