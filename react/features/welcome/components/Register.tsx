@@ -81,7 +81,8 @@ const Register: FC<Props> = ({ closeRegisterWindow }: Props) => {
 
             setErrors(resErrors);
         } else {
-            localStorage.setItem('username', username);
+            const sliced = username[0] === '@' ? username.slice(1) : username;
+            localStorage.setItem('username', sliced);
             window.location.href = window.location.href;
         }
     }
