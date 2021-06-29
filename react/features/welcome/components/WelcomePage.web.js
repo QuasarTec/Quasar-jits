@@ -138,6 +138,7 @@ class WelcomePage extends AbstractWelcomePage {
 
         const urlParams = new URLSearchParams(window.location.search);
         const err = urlParams.get('error');
+        const hash = urlParams.get('userHash');
 
         if (err) {
             this.setState({
@@ -145,26 +146,22 @@ class WelcomePage extends AbstractWelcomePage {
             });
         }
 
-        if (isDomainPremium) {
-            const hash = urlParams.get('userHash');
+        if (isDomainPremium && hash) {
+            const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/check-hash', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hash
+                })
+            });
 
-            if (hash) {
-                const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/check-hash', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        hash
-                    })
-                });
+            const result = await res.json();
 
-                const result = await res.json();
-
-                if (result.username) {
-                    localStorage.setItem('username', result.username);
-                    window.location.href = window.location.href.split('?')[0];
-                }
+            if (result.username) {
+                localStorage.setItem('username', result.username);
+                window.location.href = window.location.href.split('?')[0];
             }
         }
 
@@ -172,7 +169,7 @@ class WelcomePage extends AbstractWelcomePage {
 
         if (isDomainPremium && !isPaid) {
             window.location.href = defaultDomain;
-        } else if (!isDomainPremium && isPaid) {
+        } else if (!isDomainPremium && isPaid && !hash) {
             const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
                 method: 'POST',
                 headers: {

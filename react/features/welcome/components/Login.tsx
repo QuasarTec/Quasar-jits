@@ -54,7 +54,7 @@ const checkAfterLogin = async () => {
 
         if (result.hash) {
             // eslint-disable-next-line prefer-template
-            window.location.href = premiumDomain + `?hash=${result.hash}`;
+            window.location.href = premiumDomain + `?userHash=${result.hash}`;
         }
     }
 };
@@ -99,10 +99,6 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
             }
 
             callback();
-
-            if (isEnteringCode) {
-                window.location.href = window.location.href;
-            }
         } else {
             setError(optionError);
         }
