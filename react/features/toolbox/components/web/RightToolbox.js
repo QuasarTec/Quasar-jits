@@ -1306,7 +1306,7 @@ class RightToolbox extends Component<Props> {
                     <div className = 'additional-wrapper'>
                         <LocalRecordingButton />
                         <button
-                            className = 'reload-button'
+                            className = 'reload-button toolbox-icon'
                             onClick = { this.handleReload }>
                             <img src = '../../../../../images/qcloud_logo.svg' />
                         </button>

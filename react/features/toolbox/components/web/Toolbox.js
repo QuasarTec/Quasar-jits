@@ -368,7 +368,6 @@ class Toolbox extends Component<Props> {
             <div
                 className = { rootClassNames }
                 id = 'new-toolbox'>
-                <div className = 'blurred-background' />
                 { this._renderToolboxContent()}
             </div>
         );
@@ -1175,6 +1174,18 @@ class Toolbox extends Component<Props> {
                 );
         }
 
+        if (this._shouldShowButton('tileview')) {
+            buttons.has('tileview')
+                ? mainMenuAdditionalButtons.push(
+                    <TileViewButton
+                        key = 'tileview'
+                        showLabel = { false } />)
+                : overflowMenuAdditionalButtons.push(
+                    <TileViewButton
+                        key = 'tileview'
+                        showLabel = { true } />);
+        }
+
         return {
             mainMenuAdditionalButtons,
             overflowMenuAdditionalButtons
@@ -1306,6 +1317,11 @@ class Toolbox extends Component<Props> {
                         <div>
                             <LocalRecordingButton />
                             {rightButtons}
+                            <button
+                                className = 'reload-button toolbox-icon'
+                                onClick = { this._onHandleReload }>
+                                <img src = '../../../../../images/qcloud_logo.svg' />
+                            </button>
                         </div>
                         <div className = 'center'>
                             {this._renderAudioButton()}

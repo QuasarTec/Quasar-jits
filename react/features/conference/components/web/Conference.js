@@ -224,12 +224,6 @@ class Conference extends AbstractConference<Props, *> {
                         <LargeVideo />
                         {!_isParticipantsPaneVisible && <KnockingParticipantList />}
                         <Filmstrip />
-                        {window.innerWidth > 1000
-                            && <button
-                                className = 'reload-button'
-                                onClick = { this._onHandleReload }>
-                                <img src = '../../../../../images/qcloud_logo.svg' />
-                            </button>}
                     </div>
 
                     {_showPrejoin || _isLobbyScreenVisible

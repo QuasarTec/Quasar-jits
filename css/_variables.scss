@@ -30,7 +30,7 @@ $defaultSideBarFontColor: #44A5FF;
 $defaultSemiDarkColor: #ACACAC;
 $defaultDarkColor: #2b3d5c;
 $defaultWarningColor: rgb(215, 121, 118);
-$participantsPaneBgColor: #141414;
+$participantsPaneBgColor: rgba(255, 255, 255, 0.085);
 $presence-available: rgb(110, 176, 5);
 $presence-away: rgb(250, 201, 20);
 $presence-busy: rgb(233, 0, 27);
@@ -39,13 +39,13 @@ $presence-idle: rgb(172, 172, 172);
 /**
  * Toolbar
  */
-$newToolbarBackgroundColor: #141414;
+$newToolbarBackgroundColor: rgba(255, 255, 255, 0.085);
 $newToolbarButtonHoverColor: rgba(255, 255, 255, 0.07);
 $newToolbarButtonToggleColor: rgba(255, 255, 255, 0.07);
 $menuBG:#242528;
 $newToolbarFontSize: 24px;
 $newToolbarHangupFontSize: 32px;
-$newToolbarSize: 48px;
+$newToolbarSize: 52px;
 $newToolbarSizeWithPadding: calc(#{$newToolbarSize} + 24px);
 $toolbarTitleFontSize: 19px;
 $overflowMenuItemColor: #fff;
@@ -90,7 +90,7 @@ $modalTextColor: #333;
  * Chat
  */
 $chatActionsSeparatorColor: rgb(173, 105, 112);
-$chatBackgroundColor: #141414;
+$chatBackgroundColor: rgba(255, 255, 255, 0.085);
 $chatInputSeparatorColor: #A4B8D1;
 $chatLocalMessageBackgroundColor: #484A4F;
 $chatPrivateMessageBackgroundColor: rgb(153, 69, 77);

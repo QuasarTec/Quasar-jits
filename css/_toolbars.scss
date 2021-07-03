@@ -18,12 +18,6 @@
     text-overflow: ellipsis;
     vertical-align: middle;
 }
-
-.blurred-background {
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-}
-
 /**
  * TODO: when the old filmstrip has been removed, remove the "new-" prefix.
  */
@@ -111,10 +105,16 @@
     }
 }
 
+.sound {
+    .toolbox-content-wrapper {
+        width: auto;
+    }
+}
+
 .toolbox-content-wrapper {
     display: flex;
     flex-direction: column;
-    width: 550px;
+    width: 700px;
 }
 
 .toolbox-content-items {
@@ -128,6 +128,7 @@
     padding: 8px;
     text-align: center;
     width: 100%;
+    box-sizing: border-box;
 
     .center {
         .audio-preview, .video-preview {
@@ -273,7 +274,7 @@
 
     &.disabled {
         cursor: initial !important;
-        background-color: #36383c !important;
+        background-color: #292929 !important;
 
         svg {
             fill: #929292 !important;
@@ -375,7 +376,8 @@
             right: auto;
 
             .additional-wrapper {
-                background-color: #131519;
+                background-color: rgba(255, 255, 255, 0.085);
+                box-shadow: 0 2px 8px 4px rgba(0,0,0,.25), 0 0 0 1px rgba(0,0,0,.15);
                 border-radius: 1000px;
                 padding: 7px;
                 display: flex;
