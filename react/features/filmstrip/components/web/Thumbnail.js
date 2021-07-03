@@ -713,8 +713,6 @@ class Thumbnail extends Component<Props, State> {
                 className = { containerClassName }
                 id = 'localVideoContainer'
                 onClick = { this._onClick }
-                onMouseEnter = { this._onMouseEnter }
-                onMouseLeave = { this._onMouseLeave }
                 style = { styles.thumbnail }>
                 <div className = 'videocontainer__background' />
                 <span id = 'localVideoWrapper'>
@@ -723,16 +721,7 @@ class Thumbnail extends Component<Props, State> {
                         id = 'localVideo_container'
                         videoTrack = { _videoTrack } />
                 </span>
-                <div className = 'videocontainer__toptoolbar'>
-                    { this._renderTopIndicators() }
-                </div>
                 { this._renderAvatar(styles.avatar) }
-                <span className = 'localvideomenu'>
-                    <LocalVideoMenuTriggerButton />
-                </span>
-                <span className = 'audioindicator-container'>
-                    <AudioLevelIndicator audioLevel = { audioLevel } />
-                </span>
             </span>
         );
     }

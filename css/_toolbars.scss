@@ -23,7 +23,7 @@
  * TODO: when the old filmstrip has been removed, remove the "new-" prefix.
  */
 .new-toolbox {
-    bottom: 0;
+    bottom: calc((48px * 2) * -1);
     position: absolute;
     right: 0;
     left: 0;
@@ -342,6 +342,7 @@
             bottom: 100px;
 
             .toolbox-content-items {
+                width: auto;
                 display: flex;
                 flex-direction: column;
                 border-radius: 1000px;
@@ -406,6 +407,7 @@
             left: 0;
 
             .toolbox-content-items {
+                width: auto;
                 flex-direction: row;
 
                 > div {
@@ -430,7 +432,7 @@
         }
 
         .toolbox-content-items {
-            border-radius: 10px;
+            border-radius: 13px;
             display: flex;
             flex-direction: column;
             justify-content: center;
