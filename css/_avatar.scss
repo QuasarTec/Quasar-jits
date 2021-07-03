@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 .avatar {
     background-color: #AAA;
     border-radius: 30%;
@@ -23,6 +25,7 @@
 .avatar-svg {
     height: 100%;
     width: 100%;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .defaultAvatar {

@@ -368,6 +368,7 @@ class Toolbox extends Component<Props> {
             <div
                 className = { rootClassNames }
                 id = 'new-toolbox'>
+                <div className = 'blurred-background' />
                 { this._renderToolboxContent()}
             </div>
         );
