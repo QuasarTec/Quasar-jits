@@ -1124,12 +1124,10 @@ class Toolbox extends Component<Props> {
      * in the toolbar beside the main audio/video & hanugup.
      * @returns {Object}
      */
-    _getAdditionalButtons(buttons) {
+    _getLeftButtons(buttons) {
         const {
-            _chatOpen,
             _desktopSharingEnabled,
             _desktopSharingDisabledTooltipKey,
-            _raisedHand,
             _screensharing,
             t
         } = this.props;
@@ -1156,6 +1154,48 @@ class Toolbox extends Component<Props> {
                     onClick = { this._onToolbarToggleScreenshare }
                     text = { t(`toolbar.${_screensharing ? 'stopScreenSharing' : 'startScreenSharing'}`) } />);
         }
+
+        if (this._shouldShowButton('participants-pane') || this._shouldShowButton('invite')) {
+            buttons.has('participants-pane')
+                ? mainMenuAdditionalButtons.push(
+                    <ToolbarButton
+                        accessibilityLabel = { t('toolbar.accessibilityLabel.participants') }
+                        icon = { IconParticipants }
+                        onClick = { this._onToolbarToggleParticipantsPane }
+                        toggled = { this.props._participantsPaneOpen }
+                        tooltip = { t('toolbar.participants') } />)
+                : overflowMenuAdditionalButtons.push(
+                    <OverflowMenuItem
+                        accessibilityLabel = { t('toolbar.accessibilityLabel.participants') }
+                        icon = { IconParticipants }
+                        key = 'participants-pane'
+                        onClick = { this._onToolbarToggleParticipantsPane }
+                        text = { t('toolbar.participants') } />
+                );
+        }
+
+        return {
+            mainMenuAdditionalButtons,
+            overflowMenuAdditionalButtons
+        };
+    }
+
+    /**
+     * Returns the buttons to be displayed in main or the overflow menu.
+     *
+     * @param {Set} buttons - A set containing the buttons to be displayed
+     * in the toolbar beside the main audio/video & hanugup.
+     * @returns {Object}
+     */
+    _getRightButtons(buttons) {
+        const {
+            _chatOpen,
+            _raisedHand,
+            t
+        } = this.props;
+
+        const overflowMenuAdditionalButtons = [];
+        const mainMenuAdditionalButtons = [];
 
         if (this._shouldShowButton('chat')) {
             buttons.has('chat')
@@ -1193,37 +1233,6 @@ class Toolbox extends Component<Props> {
                     key = 'raisehand'
                     onClick = { this._onToolbarToggleRaiseHand }
                     text = { t(`toolbar.${_raisedHand ? 'lowerYourHand' : 'raiseYourHand'}`) } />);
-        }
-
-        if (this._shouldShowButton('participants-pane') || this._shouldShowButton('invite')) {
-            buttons.has('participants-pane')
-                ? mainMenuAdditionalButtons.push(
-                    <ToolbarButton
-                        accessibilityLabel = { t('toolbar.accessibilityLabel.participants') }
-                        icon = { IconParticipants }
-                        onClick = { this._onToolbarToggleParticipantsPane }
-                        toggled = { this.props._participantsPaneOpen }
-                        tooltip = { t('toolbar.participants') } />)
-                : overflowMenuAdditionalButtons.push(
-                    <OverflowMenuItem
-                        accessibilityLabel = { t('toolbar.accessibilityLabel.participants') }
-                        icon = { IconParticipants }
-                        key = 'participants-pane'
-                        onClick = { this._onToolbarToggleParticipantsPane }
-                        text = { t('toolbar.participants') } />
-                );
-        }
-
-        if (this._shouldShowButton('tileview')) {
-            buttons.has('tileview')
-                ? mainMenuAdditionalButtons.push(
-                    <TileViewButton
-                        key = 'tileview'
-                        showLabel = { false } />)
-                : overflowMenuAdditionalButtons.push(
-                    <TileViewButton
-                        key = 'tileview'
-                        showLabel = { true } />);
         }
 
         return {
@@ -1277,10 +1286,12 @@ class Toolbox extends Component<Props> {
         const containerClassName = `toolbox-content${_isMobile ? ' toolbox-content-mobile' : ''}`;
         let overflowMenuAdditionalButtons = [];
         let mainMenuAdditionalButtons = [];
+        let rightButtons = [];
 
 
         if (showOverflowMenuButton) {
-            ({ overflowMenuAdditionalButtons, mainMenuAdditionalButtons } = this._getAdditionalButtons(buttonSet));
+            ({ overflowMenuAdditionalButtons, mainMenuAdditionalButtons } = this._getLeftButtons(buttonSet));
+            ({ mainMenuAdditionalButtons: rightButtons } = this._getRightButtons(buttonSet));
         }
 
         return (
@@ -1291,22 +1302,29 @@ class Toolbox extends Component<Props> {
                     onMouseOut = { this._onMouseOut }
                     onMouseOver = { this._onMouseOver }>
                     <div className = 'toolbox-content-items'>
-                        {this._renderAudioButton()}
-                        {this._renderVideoButton()}
-                        <LocalRecordingButton />
-                        {mainMenuAdditionalButtons}
-                        {showOverflowMenuButton && <OverflowMenuButton
-                            isOpen = { _overflowMenuVisible }
-                            onVisibilityChange = { this._onSetOverflowVisible }>
-                            <ul
-                                aria-label = { t(toolbarAccLabel) }
-                                className = 'overflow-menu'>
-                                {this._renderOverflowMenuContent(overflowMenuAdditionalButtons)}
-                            </ul>
-                        </OverflowMenuButton>}
-                        <HangupButton
-                            customClass = 'hangup-button'
-                            visible = { this._shouldShowButton('hangup') } />
+                        <div>
+                            <LocalRecordingButton />
+                            {rightButtons}
+                        </div>
+                        <div className = 'center'>
+                            {this._renderAudioButton()}
+                            {this._renderVideoButton()}
+                            <HangupButton
+                                customClass = 'hangup-button'
+                                visible = { this._shouldShowButton('hangup') } />
+                        </div>
+                        <div>
+                            {mainMenuAdditionalButtons}
+                            {showOverflowMenuButton && <OverflowMenuButton
+                                isOpen = { _overflowMenuVisible }
+                                onVisibilityChange = { this._onSetOverflowVisible }>
+                                <ul
+                                    aria-label = { t(toolbarAccLabel) }
+                                    className = 'overflow-menu'>
+                                    {this._renderOverflowMenuContent(overflowMenuAdditionalButtons)}
+                                </ul>
+                            </OverflowMenuButton>}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -51,7 +51,7 @@ var interfaceConfig = {
      */
     CONNECTION_INDICATOR_DISABLED: false,
 
-    DEFAULT_BACKGROUND: '#474747',
+    DEFAULT_BACKGROUND: 'linear-gradient(to top, #232526, #414345)',
     DEFAULT_LOCAL_DISPLAY_NAME: 'me',
     DEFAULT_LOGO_URL: 'images/watermark.svg',
     DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Connecter',

@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 
 import { Watermarks } from '../../base/react';
 import { connect } from '../../base/redux';
-import { setColorAlpha } from '../../base/util';
 import { fetchCustomBrandingData } from '../../dynamic-branding';
 import { Captions } from '../../subtitles/';
 
@@ -121,15 +120,9 @@ class LargeVideo extends Component<Props> {
      */
     _getCustomSyles() {
         const styles = {};
-        const { _customBackgroundColor, _customBackgroundImageUrl } = this.props;
+        const { _customBackgroundImageUrl } = this.props;
 
-        styles.backgroundColor = _customBackgroundColor || interfaceConfig.DEFAULT_BACKGROUND;
-
-        if (this.props._backgroundAlpha !== undefined) {
-            const alphaColor = setColorAlpha(styles.backgroundColor, this.props._backgroundAlpha);
-
-            styles.backgroundColor = alphaColor;
-        }
+        styles.background = 'linear-gradient(to top, #232526, #414345)';
 
         if (_customBackgroundImageUrl) {
             styles.backgroundImage = `url(${_customBackgroundImageUrl})`;

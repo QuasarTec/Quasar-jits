@@ -55,7 +55,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    margin-bottom: 16px;
+    margin-bottom: 22px;
     position: relative;
     z-index: $toolbarZ;
 
@@ -109,17 +109,26 @@
 .toolbox-content-wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    max-width: 100%;
+    width: 50%;
 }
 
 .toolbox-content-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background: $newToolbarBackgroundColor;
     box-shadow: 0px 2px 8px 4px rgba(0, 0, 0, 0.25), 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
+    border-radius: 18px;
     margin: 0 auto;
-    padding: 6px;
+    padding: 8px;
     text-align: center;
+    width: 100%;
+
+    .center {
+        .audio-preview, .video-preview {
+            margin-right: 8px;
+        }
+    }
 
     > div {
         margin-left: 8px;
@@ -235,7 +244,7 @@
 
 .toolbox-icon {
     display: flex;
-    border-radius: 3px;
+    border-radius: 12px;
     flex-direction: column;
     font-size: 24px;
     height: $newToolbarSize;

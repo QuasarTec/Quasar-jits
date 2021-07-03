@@ -3,7 +3,7 @@
     position: relative;
     background-size: contain;
     border: $thumbnailVideoBorder solid transparent;
-    border-radius: $borderRadius;
+    border-radius: 10px;
     margin: 0 $thumbnailVideoMargin;
 
     &.videoContainerFocused, &:hover {

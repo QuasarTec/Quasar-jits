@@ -16,6 +16,7 @@
 .subject-info-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     max-width: calc(100% - 280px);
     margin: 0 auto;
 
@@ -32,17 +33,16 @@
 .subject-info {
     align-items: center;
     display: flex;
-    margin-bottom: 4px;
     max-width: 80%;
     height: 28px;
 }
 
 .subject-text {
     background: rgba(0, 0, 0, 0.6);
-    border-radius: 3px 0px 0px 3px;
+    border-radius: 8px 0px 0px 8px;
     font-size: 14px;
     line-height: 24px;
-    padding: 2px 16px;
+    padding: 7px 16px;
     height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -51,10 +51,10 @@
 
 .subject-timer {
     background: rgba(0, 0, 0, 0.8);
-    border-radius: 0px 3px 3px 0px;
+    border-radius: 0px 8px 8px 0px;
     display: inline-block;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     min-width: 34px;
-    padding: 6px 8px;
+    padding: 11px 18px;
 }

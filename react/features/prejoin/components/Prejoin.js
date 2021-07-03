@@ -323,7 +323,6 @@ class Prejoin extends Component<Props, State> {
                 name = { name }
                 showAvatar = { showAvatar }
                 showConferenceInfo = { showConferenceInfo }
-                skipPrejoinButton = { this._renderSkipPrejoinButton() }
                 title = { t('prejoin.joinMeeting') }
                 videoMuted = { !showCameraPreview }
                 videoTrack = { videoTrack }
@@ -400,29 +399,6 @@ class Prejoin extends Component<Props, State> {
      */
     _renderFooter() {
         return this.props.deviceStatusVisible && <DeviceStatus />;
-    }
-
-    /**
-     * Renders the 'skip prejoin' button.
-     *
-     * @returns {React$Element}
-     */
-    _renderSkipPrejoinButton() {
-        const { buttonIsToggled, t, showSkipPrejoin } = this.props;
-
-        if (!showSkipPrejoin) {
-            return null;
-        }
-
-        return (
-            <div className = 'prejoin-checkbox-container'>
-                <ToggleButton
-                    isToggled = { buttonIsToggled }
-                    onClick = { this._onToggleButtonClick }>
-                    {t('prejoin.doNotShow')}
-                </ToggleButton>
-            </div>
-        );
     }
 }
 
