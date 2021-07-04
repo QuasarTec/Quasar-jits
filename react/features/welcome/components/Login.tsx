@@ -36,7 +36,7 @@ const requestApi = async (address: string, body: any) => {
     return json;
 };
 
-const checkAfterLogin = async () => {
+const checkAfterLogin = async (closeLoginPrompt: () => void) => {
     const isPaid = await isUserPaid();
 
     if (!isDomainPremium && isPaid) {
@@ -55,7 +55,11 @@ const checkAfterLogin = async () => {
         if (result.hash) {
             // eslint-disable-next-line prefer-template
             window.location.href = premiumDomain + `?userHash=${result.hash}`;
+        } else {
+            closeLoginPrompt();
         }
+    } else {
+        closeLoginPrompt();
     }
 };
 
@@ -82,7 +86,7 @@ const Login: FC<Props> = ({ closeLoginPrompt }: Props) => {
             body: {
                 code: confirmationCode
             },
-            callback: checkAfterLogin,
+            callback: () => checkAfterLogin(closeLoginPrompt),
             error: 'Неверный код'
         }
     };
