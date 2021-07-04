@@ -147,7 +147,7 @@ class WelcomePage extends AbstractWelcomePage {
         }
 
         if (isDomainPremium && hash) {
-            const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/check-hash', {
+            const res = await fetch('https://bot.quasaria.ru/bot/redirect/check-hash', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -170,7 +170,7 @@ class WelcomePage extends AbstractWelcomePage {
         if (isDomainPremium && !isPaid && !hash) {
             window.location.href = defaultDomain;
         } else if (!isDomainPremium && isPaid) {
-            const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
+            const res = await fetch('https://bot.quasaria.ru/bot/redirect/get-hash', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'

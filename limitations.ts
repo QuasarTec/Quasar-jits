@@ -12,7 +12,7 @@ const isUserPaid = async (): Promise<boolean> => {
     let isPayed = false;
 
     if (username) {
-        const res = await fetch('https://matrix.easy-stars.ru/bot/users/check-on-payed', {
+        const res = await fetch('https://bot.quasaria.ru/bot/users/check-on-payed', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

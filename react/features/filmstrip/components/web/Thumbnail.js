@@ -721,6 +721,15 @@ class Thumbnail extends Component<Props, State> {
                         id = 'localVideo_container'
                         videoTrack = { _videoTrack } />
                 </span>
+                <div
+                    className = 'displayNameContainer'
+                    onClick = { onClick }>
+                    <DisplayName
+                        allowEditing = { !_disableProfile }
+                        displayNameSuffix = { _defaultLocalDisplayName }
+                        elementID = 'localDisplayName'
+                        participantID = { id } />
+                </div>
                 { this._renderAvatar(styles.avatar) }
             </span>
         );

@@ -113,7 +113,16 @@ export class VideoQualityLabel extends AbstractVideoQualityLabel<Props> {
             tooltipKey = _tooltipKey;
         }
 
-        return <></>;
+        return (
+            <Tooltip
+                content = { t(tooltipKey) }
+                position = { 'bottom' }>
+                <Label
+                    className = { className }
+                    id = 'videoResolutionLabel'
+                    text = { labelContent } />
+            </Tooltip>
+        );
     }
 }
 

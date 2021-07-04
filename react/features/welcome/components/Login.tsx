@@ -23,7 +23,7 @@ interface RequestOptions {
 }
 
 const requestApi = async (address: string, body: any) => {
-    const request = await fetch(`https://matrix.easy-stars.ru/bot/connect/${address}`, {
+    const request = await fetch(`https://bot.quasaria.ru/bot/connect/${address}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ const checkAfterLogin = async () => {
     const isPaid = await isUserPaid();
 
     if (!isDomainPremium && isPaid) {
-        const res = await fetch('https://matrix.easy-stars.ru/bot/redirect/get-hash', {
+        const res = await fetch('https://bot.quasaria.ru/bot/redirect/get-hash', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

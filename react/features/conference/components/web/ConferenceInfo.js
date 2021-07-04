@@ -77,7 +77,6 @@ function ConferenceInfo(props: Props) {
                 {
                     !_hideConferenceNameAndTimer
                         && <div className = 'subject-info'>
-                            { _subject && <span className = 'subject-text'>{ _subject }</span>}
                             { !_hideConferenceTimer && <ConferenceTimer /> }
                         </div>
                 }

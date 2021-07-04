@@ -1315,13 +1315,15 @@ class Toolbox extends Component<Props> {
                     onMouseOver = { this._onMouseOver }>
                     <div className = 'toolbox-content-items'>
                         <div>
-                            <LocalRecordingButton />
+                            <span style = {{ display: 'inline-block' }}>
+                                <button
+                                    className = 'reload-button toolbox-icon'
+                                    onClick = { this._onHandleReload }>
+                                    <img src = '../../../../../images/qcloud_logo.svg' />
+                                </button>
+                            </span>
                             {rightButtons}
-                            <button
-                                className = 'reload-button toolbox-icon'
-                                onClick = { this._onHandleReload }>
-                                <img src = '../../../../../images/qcloud_logo.svg' />
-                            </button>
+                            <LocalRecordingButton />
                         </div>
                         <div className = 'center'>
                             {this._renderAudioButton()}
