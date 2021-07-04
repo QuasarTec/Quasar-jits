@@ -1,9 +1,12 @@
-#copy to the server with free jitsi
-scp -r ./libs jitsi:/usr/share/jitsi-meet
-scp -r ./css jitsi:/usr/share/jitsi-meet
-scp -r ./images jitsi:/usr/share/jitsi-meet
+#!/bin/bash
 
-#copy to the server with premium jitsi
-scp -r ./libs aws-jitsi:/usr/share/jitsi-meet
-scp -r ./css aws-jitsi:/usr/share/jitsi-meet
-scp -r ./images aws-jitsi:/usr/share/jitsi-meet
+server_names=( jitsi aws-jitsi )
+dir_names=( libs css images )
+
+for server in "${server_names[@]}"
+do
+  for dir in "${dir_names[@]}"
+    do
+        scp -r ./${dir} ${server}:/usr/share/jitsi-meet
+    done
+done
