@@ -115,7 +115,7 @@ const inputData: Input[] = [
     {
         type: 'text',
         name: HooksNames.referral,
-        placeholder: '*Telegram вашего реферала',
+        placeholder: '*Telegram вашего пригласителя',
         optional: true
     }
 ];
