@@ -71,7 +71,7 @@ const getAllVideoSources = async () => {
     return sources;
 };
 
-const chunks = [];
+let chunks = [];
 
 const DesktopButton = ({ isDialogShown, t }) => {
     const [ recorder, setRecorder ] = useState(null);
@@ -85,6 +85,8 @@ const DesktopButton = ({ isDialogShown, t }) => {
             `Record from ${new Date().toString()}.webm`
         ));
 
+        chunks = []
+
         setRecorder(null);
     };
 
@@ -95,19 +97,14 @@ const DesktopButton = ({ isDialogShown, t }) => {
     }, []);
 
     const startRecording = async () => {
-        const allAudioSources = await getAllAudioSources();
-        const mixed = mix(allAudioSources);
 
-        const screen = await navigator.mediaDevices.getDisplayMedia({
-            video: { mediaSource: 'browser' }
-        });
+        const displayStream = await navigator.mediaDevices.getDisplayMedia({video: true, audio: true});
+        // voiceStream for recording voice with screen recording
+        const voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        let tracks = [...displayStream.getTracks(), ...voiceStream.getAudioTracks()]
+        const stream = new MediaStream(tracks);
 
-        const userStream = new MediaStream([
-            screen.getVideoTracks()[0],
-            mixed
-        ]);
-
-        const userRecorder = new MediaRecorder(userStream, {
+        const userRecorder = new MediaRecorder(stream, {
             mimeType: 'video/webm'
         });
 

@@ -61,6 +61,7 @@
     "lodash": "4.17.21",
     "moment": "2.29.1",
     "moment-duration-format": "2.2.2",
+    "msr": "^1.3.4",
     "olm": "https://packages.matrix.org/npm/olm/olm-3.2.1.tgz",
     "pixelmatch": "5.1.0",
     "promise.allsettled": "1.0.4",

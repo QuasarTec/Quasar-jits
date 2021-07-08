@@ -115,7 +115,7 @@ const inputData: Input[] = [
     {
         type: 'text',
         name: HooksNames.referral,
-        placeholder: '*Telegram вашего пригласителя',
+        placeholder: 'Telegram вашего пригласителя',
         optional: true
     }
 ];
@@ -150,7 +150,6 @@ const InnerRegister: FC<InnerProps> = ({
                         return (
                             <div key = { name }>
                                 { Input }
-                                <p>*Необязательно</p>
                             </div>
                         )
                     }
