@@ -1318,7 +1318,7 @@ class Toolbox extends Component<Props> {
                             <span style = {{ display: 'inline-block' }}>
                                 <button
                                     className = 'reload-button toolbox-icon'
-                                    onClick = { this._onHandleReload }>
+                                    onClick = { () => location.reload() }>
                                     <img src = '../../../../../images/qcloud_logo.svg' />
                                 </button>
                             </span>
