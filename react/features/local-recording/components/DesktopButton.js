@@ -1,5 +1,7 @@
-import { saveAs } from 'file-saver';
 import React, { useState, useEffect } from 'react';
+import RecordRTC from 'recordrtc';
+import Crunker from 'crunker';
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg';
 
 import { translate } from '../../base/i18n';
 import { RecordStart, RecordStop, RecordPause, RecordResume } from '../../base/icons';
@@ -11,17 +13,17 @@ const blobToFile = (theBlob, fileName) => {
     return video;
 };
 
-const mix = streams => {
-    const audioContext = new AudioContext();
-    const dest = audioContext.createMediaStreamDestination();
-
-    streams.forEach(stream => {
-        const source = audioContext.createMediaStreamSource(stream);
-
-        source.connect(dest);
+async function mergeVideo(video, audio) {
+    let ffmpeg = createFFmpeg({
+        log: true
     });
-
-    return dest.stream.getTracks()[0];
+    await ffmpeg.load();
+    ffmpeg.FS('writeFile', 'video.webm', await fetchFile(video));
+    ffmpeg.FS('writeFile', 'audio.mp3', await fetchFile(audio));
+    await ffmpeg.run('-i', 'video.webm', '-i', 'audio.mp3', '-c:v', 'copy', '-c:a', 'copy', 'output.mkv');
+    let data = await ffmpeg.FS('readFile', 'output.mkv');
+    console.log(data)
+    return new Uint8Array(data.buffer);
 };
 
 const getUserMicAudio = async () => {
@@ -48,7 +50,7 @@ const getAllAudioSources = async () => {
     sources.push(userAudio);
 
     for (const audioElement of audioElements) {
-        if (!audioElement.hasAttribute('preload')) {
+        if (!audioElement.hasAttribute('preload') && audioElement.id !== 'record') {
             const stream = audioElement.captureStream();
 
             sources.push(stream);
@@ -71,23 +73,73 @@ const getAllVideoSources = async () => {
     return sources;
 };
 
+const array_compare = (a, b) => {
+    // if lengths are different, arrays aren't equal
+    if(a.length != b.length)
+       return false;
+
+    for(let i = 1; i < a.length; i++)
+       if(a[i].id != b[i].id)
+          return false
+
+    return true;
+}
+
 let chunks = [];
+let audioChunks = [];
+let audioStreams = [];
+let audioRecorder;
+let updateAudioStreamsListener;
 
 const DesktopButton = ({ isDialogShown, t }) => {
     const [ recorder, setRecorder ] = useState(null);
     const [ isPaused, setIsPaused ] = useState(false);
 
-    const stopRecording = () => {
-        const blob = new Blob(chunks, { type: chunks[0].type });
+    const stopRecording = async () => {
+        audioRecorder.stop(blob => {
+            audioChunks.push(blob)
+            let audioBuffers = audioChunks.map(chunk => {
+                return URL.createObjectURL(chunk)
+            })
+    
+            let crunker = new Crunker();
+    
+            crunker.fetchAudio(...audioBuffers)
+                            .then(buffers => {
+                                return crunker.concatAudio(buffers)
+                            })
+                            .then(concat => {
+                                return crunker.export(concat, 'audio/mp3')
+                            })
+                            .then(async output => {
+                                const video = new Blob(chunks, {type: chunks[0].type})
 
-        saveAs(blobToFile(
-            blob,
-            `Record from ${new Date().toString()}.webm`
-        ));
+                                console.log(output.blob)
 
-        chunks = []
+                                const audioAndVideoArray = await mergeVideo(video, output.blob)
+                                const audioAndVideo = new Blob([audioAndVideoArray], {
+                                    type: 'video/mp4'
+                                });
 
-        setRecorder(null);
+                                console.log(audioAndVideoArray)
+                                console.log(audioAndVideo)
+
+                                saveAs(blobToFile(
+                                    audioAndVideo,
+                                    `Record from ${new Date().toUTCString()}.mp4`
+                                ))
+
+                                chunks = [];
+                                audioChunks = [];
+                                        
+                                clearInterval(updateAudioStreamsListener);
+                                        
+                                setRecorder(null);
+                            })
+
+        })
+
+        
     };
 
     useEffect(() => {
@@ -98,14 +150,21 @@ const DesktopButton = ({ isDialogShown, t }) => {
 
     const startRecording = async () => {
 
-        const displayStream = await navigator.mediaDevices.getDisplayMedia({video: true, audio: true});
-        // voiceStream for recording voice with screen recording
-        const voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-        let tracks = [...displayStream.getTracks(), ...voiceStream.getAudioTracks()]
-        const stream = new MediaStream(tracks);
+        const displayStream = await navigator.mediaDevices.getDisplayMedia({video: true});
 
-        const userRecorder = new MediaRecorder(stream, {
-            mimeType: 'video/webm'
+        let tracks = new MediaStream([displayStream.getVideoTracks()[0]])
+
+        let audioStreams = await getAllAudioSources();
+
+        audioRecorder = new RecordRTC.MultiStreamRecorder(audioStreams, {
+            type: 'audio',
+            mimeType: 'audio/wav'
+        });
+        audioRecorder.record()
+        listenerOfAudioStreams()
+
+        const userRecorder = new MediaRecorder(tracks, {
+            mimeType: 'video/webm;codecs=vp8'
         });
 
         userRecorder.ondataavailable = e => chunks.push(e.data);
@@ -114,6 +173,8 @@ const DesktopButton = ({ isDialogShown, t }) => {
         userRecorder.start();
 
         setRecorder(userRecorder);
+
+        
     };
 
     const pauseRecordingVideo = () => {
@@ -125,6 +186,24 @@ const DesktopButton = ({ isDialogShown, t }) => {
 
         setIsPaused(!isPaused);
     };
+
+    const listenerOfAudioStreams = () => {
+        updateAudioStreamsListener = setInterval(async () => {
+            let streams = await getAllAudioSources();
+            if (!array_compare(streams, audioStreams)) {
+                audioRecorder.stop(blob => audioChunks.push(blob));
+
+                audioStreams = streams;
+
+                audioRecorder = new RecordRTC.MultiStreamRecorder(streams, {
+                    type: 'audio',
+                    mimeType: 'audio/wav'
+                });
+                audioRecorder.record()
+
+            }
+        }, 2000);
+    }
 
     return (
         <div className = 'record-preview'>
