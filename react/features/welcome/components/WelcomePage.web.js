@@ -320,8 +320,8 @@ class WelcomePage extends AbstractWelcomePage {
                         src = '../../../../images/watermark.svg' />
 
                     <div className = 'links'>
-                        <a href = 'https://easy-stars.ru/'>Quasar Technology</a>
-                        <a href = 'https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
+                        <a href = 'https://quasaria.ru/'>Quasar Technology</a>
+                        <a href = 'https://messenger.quasaria.ru/mobile_guide/'>Quasar Message</a>
                         <a href = 'https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
                         <a href = 'https://t.me/joinchat/K5fKWxce4tlkMWMy'>Контакты</a>
                     </div>
@@ -474,8 +474,8 @@ class WelcomePage extends AbstractWelcomePage {
                     </div>
                     <div className = 'container center'>
                         <div className = 'links'>
-                            <a href = 'https://easy-stars.ru/'>Quasar Technology</a>
-                            <a href = 'https://messenger.easy-stars.ru/mobile_guide/'>Quasar Message</a>
+                            <a href = 'https://quasaria.ru/'>Quasar Technology</a>
+                            <a href = 'https://messenger.quasaria.ru/mobile_guide/'>Quasar Message</a>
                             <a href = 'https://www.youtube.com/watch?v=OKatgtc4x1I&t=11s'>Маркетинг план</a>
                             <a href = 'https://t.me/joinchat/K5fKWxce4tlkMWMy'>Контакты</a>
                         </div>
