@@ -57,7 +57,7 @@ const Register: FC<Props> = ({ closeRegisterWindow }: Props) => {
 
         const query = stringify(body);
         
-        const res = await fetch(`https://api.easy-stars.ru/api/query/user/register`, {
+        const res = await fetch(`https://api.quasaria.ru/api/query/user/register`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded',
