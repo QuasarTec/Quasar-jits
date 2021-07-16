@@ -1,4 +1,5 @@
 /* global interfaceConfig */
+// Кто бы это ни читал - пошел нахуй
 
 import React from 'react';
 
