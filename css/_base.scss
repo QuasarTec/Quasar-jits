@@ -30,7 +30,17 @@ body {
     color: $defaultColor;
     background: $defaultBackground;
 }
-
+@media screen and (max-width:700px){
+	.videocontainer .leftwatermark {
+		top: 0 !important;
+		left: 5px !important;
+	}
+}
+.copyright {
+	font-size: 12px;
+	font-weight: normal !important;
+	text-align: center !important;
+}
 /**
  * This will hide the focus indicator if an element receives focus via the mouse,
  * but it will still show up on keyboard focus, thus preserving accessibility.

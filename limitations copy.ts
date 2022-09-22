@@ -1,5 +1,5 @@
 /* eslint-disable flowtype/no-types-missing-file-annotation */
-const premiumDomain = 'https://qtconnect.ru/';
+const premiumDomain = 'https://vip.qtconnect.ru/';
 const defaultDomain = 'https://qtconnect.ru/';
 
 const premiumDomainRegex = new RegExp(premiumDomain);
@@ -7,10 +7,7 @@ const premiumDomainRegex = new RegExp(premiumDomain);
 const isDomainPremium = premiumDomainRegex.test(window.location.href);
 
 const isUserPaid = async (): Promise<boolean> => {
-
-	return true;
-
-    /* const username = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
 
     let isPayed = false;
 
@@ -30,12 +27,12 @@ const isUserPaid = async (): Promise<boolean> => {
         isPayed = json.payed;
     }
 
-    return isPayed; */
+    return isPayed;
 };
 
-const maxPeopleAllowed = 10000;
-const timeLimitation = 6000000 * 50;
-const timeTillNotification = 6000000 * 40;
+const maxPeopleAllowed = 110;
+const timeLimitation = 60000 * 50;
+const timeTillNotification = 60000 * 40;
 
 export { isDomainPremium, maxPeopleAllowed, timeLimitation, isUserPaid, timeTillNotification };
 

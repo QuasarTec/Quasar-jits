@@ -499,7 +499,7 @@ export function searchDirectory( // eslint-disable-line max-params
 export function getShareInfoText(
         state: Object, inviteUrl: string, useHtml: ?boolean): Promise<string> {
     let roomUrl = _decodeRoomURI(inviteUrl);
-    const includeDialInfo = state['features/base/config'] !== undefined;
+    const includeDialInfo = false;//state['features/base/config'] !== undefined;
 
     if (useHtml) {
         roomUrl = `<a href="${roomUrl}">${roomUrl}</a>`;
